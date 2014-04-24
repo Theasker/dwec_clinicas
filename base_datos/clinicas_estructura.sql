@@ -119,7 +119,6 @@ CREATE  TABLE IF NOT EXISTS `theasker_clinicas`.`clinica_doctor` (
   `id_doctor` INT(4) NOT NULL AUTO_INCREMENT ,
   `id_clinica` INT(4) NOT NULL ,
   `numdoctor` INT(2) NULL ,
-  `doctores_id_doctor` INT(4) NOT NULL ,
   PRIMARY KEY (`id_doctor`, `id_clinica`) ,
   CONSTRAINT `fk_id_clinica`
     FOREIGN KEY (`id_clinica` )
