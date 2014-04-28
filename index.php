@@ -16,7 +16,6 @@
     <!-- Tema con sidebar -->
     <!--    http://startbootstrap.com/templates/simple-sidebar.html -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
   </head>
 

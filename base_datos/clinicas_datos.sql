@@ -1,10 +1,10 @@
-USE `theasker_clinicas` ;
+USE 'theasker_clinicas' ;
 
-INSERT INTO `tarifas` (`id_tarifa`, `nombre`, `descripcion`) VALUES
+INSERT INTO 'tarifas' ('id_tarifa', 'nombre', 'descripcion') VALUES
 (1, 'TARIFA 1', NULL),
 (2, 'TARIFA 2', NULL);
 
-INSERT INTO `clinicas` (`id_clinica`, `nombre`, `razonsocial`, `cif`, `localidad`, `provincia`, `direccion`, `cp`, `numclinica`, `id_tarifa`) VALUES
+INSERT INTO 'clinicas' ('id_clinica', 'nombre', 'razonsocial', 'cif', 'localidad', 'provincia', 'direccion', 'cp', 'numclinica', 'id_tarifa') VALUES
 (1, 'CENTRO IMPLANTOLOGICO BARCELONA', 'XX', 'B11111111', 'BARCELONA', 'Álava', 'Avda. Gracia nº 15', '8015', '1', 1),
 (2, 'CENTRO DE IMPLANTOLOGÍA MADRID', 'XX', 'B111111123', 'MADRID', 'Álava', 'Paseo La Castellana nº 16', '28045', '2', 1),
 (3, 'CENTRO DE IMPLANTOLOGÍA VIGO', 'XX', 'B11111113', 'VIGO', 'PONTEVEDRA', 'Calle de Vigo nº 17', '36208', '3', 1),
@@ -13,7 +13,7 @@ INSERT INTO `clinicas` (`id_clinica`, `nombre`, `razonsocial`, `cif`, `localidad
 (6, 'CENTRO DE IMPLANTOLOGÍA SANTANDER', 'XX', 'B11111116', 'SANTANDER', 'SANTANDER', 'Calle de Santander nº 20', '50008', '6', 2),
 (15, 'CENTRO DE IMPLANTOLOGÍA TARRAGONA', 'XX', 'B11111117', 'MADRID', 'TARRAGONA', 'Paseo de Tarragona nº 21', '28020', '15', 1);
 
-INSERT INTO `doctores` (`id_doctor`, `nombre`, `numcolegiado`) VALUES
+INSERT INTO 'doctores' ('id_doctor', 'nombre', 'numcolegiado') VALUES
 (1, 'DAVID PEREZ', '11111'),
 (2, 'FRANCISCO JIMENEZ', '22222'),
 (3, 'ESTEBAN GONZALEZ', '333333'),
@@ -28,7 +28,7 @@ INSERT INTO `doctores` (`id_doctor`, `nombre`, `numcolegiado`) VALUES
 (12, 'YASMINE JERARCAL', '13131313'),
 (13, 'DIEGO ZAERA', '14141414');
 
-INSERT INTO `clinica_doctor` (`id_doctor`, `id_clinica`, `numdoctor`) VALUES
+INSERT INTO 'clinica_doctor' ('id_doctor', 'id_clinica', 'numdoctor') VALUES
 (1, 1, 1),
 (2, 1, 3),
 (3, 6, 2),
@@ -46,7 +46,10 @@ INSERT INTO `clinica_doctor` (`id_doctor`, `id_clinica`, `numdoctor`) VALUES
 (12, 5, 1),
 (13, 6, 3);
 
-INSERT INTO `articulos` (`id_articulo`, `concepto`) VALUES
+INSERT INTO `prescripciones` (`id_prescripcion`, `id_doctor`, `id_clinica`, `n_historia`, `nom_paciente`, `tipo_trabajo`, `fecha_solicitud`, `fecha_entrada`, `fecha_fin`, `fecha_cita`) VALUES (1, 1, 1, 1110000001, 'Francisco Lorinco Lorado', 'empaste', '2014-01-01', '2014-02-15', '2014-03-28', '2014-04-01');
+INSERT INTO `prescripciones` (`id_prescripcion`, `id_doctor`, `id_clinica`, `n_historia`, `nom_paciente`, `tipo_trabajo`, `fecha_solicitud`, `fecha_entrada`, `fecha_fin`, `fecha_cita`) VALUES (2, 1, 3, 2130000001, 'Armando Bronca Segura', 'ortodoncia', '2014-01-01', '2014-02-07', '2014-03-28', '2014-04-02');
+
+INSERT INTO 'articulos' ('id_articulo', 'concepto') VALUES
 (1, 'ADAMS ( ORTODONCIA)'),
 (2, 'ANALOGO'),
 (3, 'ANALOGO KLORNER'),
@@ -125,7 +128,7 @@ INSERT INTO `articulos` (`id_articulo`, `concepto`) VALUES
 (76, 'TORNILLO KLORNER'),
 (77, 'TORNILLO TITANIO');
 
-INSERT INTO `materiales` (`id_material`, `nombre`, `lote1`, `lote2`) VALUES
+INSERT INTO 'materiales' ('id_material', 'nombre', 'lote1', 'lote2') VALUES
 (1, 'PALAPRESS VARIO 500ML LIQ/ POLVO', NULL, NULL),
 (2, 'C+B CR-CO 1KG', NULL, NULL),
 (3, 'CIRCONIO', NULL, NULL),
@@ -144,7 +147,7 @@ INSERT INTO `materiales` (`id_material`, `nombre`, `lote1`, `lote2`) VALUES
 (17, 'RAPID REPAIR LIQUIDO/ POLVO', NULL, NULL),
 (18, 'TRIAD PROVIS. MARFIL MEDIO', NULL, NULL);
 
-INSERT INTO `articulos_materiales` (`materiales_id_material`, `articulos_id_articulo`) VALUES
+INSERT INTO 'articulos_materiales' ('materiales_id_material', 'articulos_id_articulo') VALUES
 (6, 4),
 (6, 5),
 (2, 9),
