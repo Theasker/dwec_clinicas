@@ -3,7 +3,17 @@
  * Fecha de entrada del trabajo al laboratorio y 
  * fecha de salida y Tipo de trabajo 
  */
+
 $(document).ready(function() {
+  $('#reset').click(function() {
+    $('.prescripciones').hide();
+  });
+  /* prescripciones ================================ */
+  /* Mostramos la tabla */
+  $('#lnkprescripciones').click(function() {
+    $('.prescripciones').show();
+  });
+  /* Datatables */
   $('#tprescripciones').dataTable({
     "bProcessing": true,
     "bServerSide": true,
@@ -11,43 +21,11 @@ $(document).ready(function() {
     "aoColumns": [
       {"mData": "clinica"},
       {"mData": "doctor"},
-      {
-        "mData": "id_prescripcion",
-        "bVisible": false
-      },
-      {
-        "mData": "id_doctor",
-        "bVisible": false
-      },
-      {
-        "mData": "id_clinica",
-        "bVisible": false
-      },
-      {
-        "mData": "n_historia",
-        "bVisible": true
-      },
-      {
-        "mData": "nom_paciente",
-        "sWidth": "100px"
-      },
+      {"mData": "n_historia","bVisible": true},
+      {"mData": "nom_paciente","sWidth": "100px"},
       {"mData": "tipo_trabajo"},
-      {
-        "mData": "fecha_solicitud",
-        "bVisible": false
-      },
-     {
-        "mData": "fecha_entrada",
-        "bVisible": true
-      },
-      {
-        "mData": "fecha_fin",
-        "bVisible": true
-      },
-      {
-        "mData": "fecha_cita",
-        "bVisible": false
-      }
+      {"mData": "fecha_entrada","bVisible": true},
+      {"mData": "fecha_fin","bVisible": true}
     ]
   });
 });

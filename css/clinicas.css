@@ -1,0 +1,10 @@
+/*
+inicialización de divs ocultos
+*/
+.prescripciones{
+  display: none;
+}
+
+table{
+  width: 100%;
+}
