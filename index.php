@@ -21,6 +21,7 @@
     <!--    http://startbootstrap.com/templates/simple-sidebar.html -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
     <link href="css/modalbasico.css" rel="stylesheet">
+    <link href="css/jquery.notice.css" rel="stylesheet">
     <link href="css/clinicas.css" rel="stylesheet">
   </head>
 
@@ -40,6 +41,7 @@
       <div id="page-content-wrapper">
         <div class="content-header">
           <h1>Laboratorio Cyndi Entes, S.A.</h1>
+          
         </div>
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
@@ -63,32 +65,59 @@
                 <tbody>
                 </tbody>
               </table>
-              <div class="frmedicion" id="basic-modal-content" style="display:none;">
-                <form id="miformulario">
-                  <input type="hidden" id="id_prescripcion"/>
-                  <label for="clinica" >Clinica:</label> <input type="text" id="clinica"/>
-                  <label for="doctor" >Doctor:</label><input type="text" id="doctor"/>
-                  <label for="paciente" >Paciente</label><input type="text" id="paciente"/>
-                  <label for="historia" >Nº historia</label><input type="text" id="historia"/>
-                  <label for="tipotrabajo" >Tipo de trabajo:</label> 
-                  <input type="text" id="tipotrabajo"/>
-                  <label></label><input id="enviar" type="submit" value="Enviar"/>
-                </form>
+
+              <div class="frmedicion" id="basic-modal-content" style="display:none;">              
+                <div class="col-md-12 column">
+                  <form role="form" id="frmprescripciones" >
+                    <div class="form-group">
+                      <input type="hidden" id="id_prescripcion"/>
+                      <label for="clinica">Clinica:</label>
+                      <select class="form-control" id="clinica" name="clinica">
+
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="doctor" >Doctor</label>
+                      <select class="form-control" id="doctor" name="doctor">
+
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="paciente" >Paciente</label>
+                      <input class="form-control" type="text" id="paciente" name="paciente"/>
+                    </div>
+                    <div class="form-group">
+                      <label for="historia" >Nº historia</label>
+                      <input class="form-control" type="text" id="historia" name="historia"/>
+                    </div>
+                    <div class="form-group">
+                      <label for="tipotrabajo" >Tipo de trabajo</label>
+                      <input class="form-control" type="text" id="tipotrabajo" name="tipotrabajo"/>
+                    </div>
+                    
+                    <input class="btn btn-default" id="enviar" type="submit" value="Enviar"/> 
+                  </form>
+                </div>
               </div>
+              
             </div>
           </div>
+          
+          <footer>
+            <div class="well" id="pruebas" style="display:none;"></div>
+          </footer>
         </div>
       </div>
     </div>
 
-
-
     <!-- JavaScript -->
     <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10-dev/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10-dev/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script type='text/javascript' src='js/jquery.simplemodal.js'></script>
-
+    <script type='text/javascript' src='js/jquery.notice.js'></script>
+    <script type='text/javascript' src='js/jquery.validate.js'></script>
+    <script type='text/javascript' src='js/messages_es.js'></script>
     <script src="js/jquery-ui-1.10.4.custom.js"></script>
     <!--    <script src="js/bootstrap.js"></script>-->
 
