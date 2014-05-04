@@ -16,10 +16,11 @@
     <!-- Add custom CSS here -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
     <link href="css/demo_table.css" rel="stylesheet">
-    <link href="css/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+    <!--    <link href="css/jquery-ui-1.10.4.custom.css" rel="stylesheet">-->
     <!-- Tema con sidebar -->
     <!--    http://startbootstrap.com/templates/simple-sidebar.html -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link href="css/modalbasico.css" rel="stylesheet">
     <link href="css/clinicas.css" rel="stylesheet">
   </head>
 
@@ -55,11 +56,25 @@
                     <th>Tipo de trabajo</th>
                     <th>Fecha entrada</th>
                     <th>Fecha fin</th>
+                    <th>Editar</th>
+                    <th>Borrar</th>
                   </tr>
                 </thead>
                 <tbody>
                 </tbody>
               </table>
+              <div class="frmedicion" id="basic-modal-content" style="display:none;">
+                <form id="miformulario">
+                  <input type="hidden" id="id_prescripcion"/>
+                  <label for="clinica" >Clinica:</label> <input type="text" id="clinica"/>
+                  <label for="doctor" >Doctor:</label><input type="text" id="doctor"/>
+                  <label for="paciente" >Paciente</label><input type="text" id="paciente"/>
+                  <label for="historia" >Nº historia</label><input type="text" id="historia"/>
+                  <label for="tipotrabajo" >Tipo de trabajo:</label> 
+                  <input type="text" id="tipotrabajo"/>
+                  <label></label><input id="enviar" type="submit" value="Enviar"/>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -72,6 +87,7 @@
     <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10-dev/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <script type='text/javascript' src='js/jquery.simplemodal.js'></script>
 
     <script src="js/jquery-ui-1.10.4.custom.js"></script>
     <!--    <script src="js/bootstrap.js"></script>-->
