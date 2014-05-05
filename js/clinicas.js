@@ -88,7 +88,6 @@ $(document).ready(function() {
       dataType: 'json',
       url: "./scripts_php/prescripciones_modificar.php",
       async: false,
-      cache: false,
       //estos son los datos que queremos actualizar, en json:
       data: {
         id_prescripcion: id_prescripcion,
@@ -151,6 +150,11 @@ $(document).ready(function() {
       }
     }
   });
+
+  // Actualización del combo de doctores según la clínica seleccionada
+  $("#clinica").change(function() {
+    cargar_doctores_de_clinica();
+  });
   
   /* Para cargar el combo de clinicas del formulario */
   function cargar_clinicas() {
@@ -181,30 +185,56 @@ $(document).ready(function() {
   
   /* Para cargar el combo de doctores del formulario */
   function cargar_doctores() {
-      $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url: "./scripts_php/doctor_listar.php",
-        async: false,
-        //estos son los datos que queremos actualizar, en json:
-        // {parametro1: valor1, parametro2, valor2, ….}
-        //data: { id_clinica: id_clinica, nombre: nombre, ….,  id_tarifa: id_tarifa },
-        error: function(xhr, status, error) {
-          //mostraríamos alguna ventana de alerta con el error
-        },
-        success: function(data) {
-          //obtenemos el mensaje del servidor, es un array!!!
-          //var mensaje = (data["mensaje"]) //o data[0], en función del tipo de array!!
-          $("#doctor").empty();
-          $.each(data, function() {
-            $("#doctor").append($('<option></option>').val(this.id_doctor).html(this.nombre));
-          });
-        },
-        complete: {
-          //si queremos hacer algo al terminar la petición ajax
-        }
-      });
-    }
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: "./scripts_php/doctor_listar.php",
+      async: false,
+      //estos son los datos que queremos actualizar, en json:
+      // {parametro1: valor1, parametro2, valor2, ….}
+      //data: { id_clinica: id_clinica, nombre: nombre, ….,  id_tarifa: id_tarifa },
+      error: function(xhr, status, error) {
+        //mostraríamos alguna ventana de alerta con el error
+      },
+      success: function(data) {
+        //obtenemos el mensaje del servidor, es un array!!!
+        //var mensaje = (data["mensaje"]) //o data[0], en función del tipo de array!!
+        $("#doctor").empty();
+        $.each(data, function() {
+          $("#doctor").append($('<option></option>').val(this.id_doctor).html(this.nombre));
+        });
+      },
+      complete: {
+        //si queremos hacer algo al terminar la petición ajax
+      }
+    });
+  }
+
+  function cargar_doctores_de_clinica() {
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: "./scripts_php/doctor_listar_filtrado.php",
+      async: false,
+      //estos son los datos que queremos actualizar, en json:
+      // {parametro1: valor1, parametro2, valor2, ….}
+      data: {clinica: clinica},
+      error: function(xhr, status, error) {
+        //mostraríamos alguna ventana de alerta con el error
+        alert('algo falla');
+      },
+      success: function(data) {
+        $("#doctor").empty();
+        $.each(data, function() {
+          $("#doctor").append($('<option></option>').val(this.id_doctor).html(this.nombre));
+        });
+      },
+      complete: {
+        //si queremos hacer algo al terminar la petición ajax
+      }
+    });
+  }
+  
   cargar_clinicas();
   cargar_doctores();
   /* Fin prescripciones  */
