@@ -111,8 +111,8 @@
     </div>
 
     <!-- JavaScript -->
-    <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="//cdn.datatables.net/1.10-dev/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery.dataTables-1.9.4.js"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script type='text/javascript' src='js/jquery.simplemodal.js'></script>
     <script type='text/javascript' src='js/jquery.notice.js'></script>

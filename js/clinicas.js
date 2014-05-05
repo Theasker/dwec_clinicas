@@ -68,7 +68,6 @@ $(document).ready(function() {
   /* Botón enviar del frmedicion */
   $("#enviar").click(function(mievento) {
     mievento.preventDefault();
-    parent.$.modal.close(); // cierra la ventana modal
     id_prescripcion = aData.id_prescripcion;
     id_clinica = aData.id_clinica;
     id_doctor = aData.id_doctor;
@@ -121,36 +120,36 @@ $(document).ready(function() {
         //si queremos hacer algo al terminar la petición ajax
       }
     });
-    // Validación de los campos
-    $('#frmprescripciones').validate({
-      onkeyup: true,
-      onfocusout: true,
-      onclick: true,
-      rules: {
-        clinica: {
-          required: true,
-          lettersonly: true,
-        },
-        doctor: {
-          required: true,
-          todasletras: true
-        },
-        paciente: {
-          required: true,
-          todasletras: true
-        },
-        historia: {
-          required: true,
-          todasletras: true
-        },
-        tipotrabajo: {
-          required: true,
-          todasletras: true
-        }
+    parent.$.modal.close(); // cierra la ventana modal
+  });
+  
+  // Validación de los campos
+  $('#frmprescripciones').validate({
+    onkeyup: true,
+    onfocusout: true,
+    onclick: true,
+    rules: {
+      clinica: {
+        required: true,
+        lettersonly: true,
+      },
+      doctor: {
+        required: true,
+        todasletras: true
+      },
+      paciente: {
+        required: true,
+        todasletras: true
+      },
+      historia: {
+        required: true,
+        todasletras: true
+      },
+      tipotrabajo: {
+        required: true,
+        todasletras: true
       }
-    });
-
- 
+    }
   });
   
   /* Para cargar el combo de clinicas del formulario */

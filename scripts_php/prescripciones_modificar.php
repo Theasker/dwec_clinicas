@@ -1,13 +1,6 @@
 <?php
-// Cabeceras para que no cachee nunca
-header( "Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
-header( "Cache-Control: no-cache, must-revalidate" );
-header( "Pragma: no-cache" );
-
 /* Database connection information */
 include("mysql.php" );
-
-
 
 /*
  * Local functions
@@ -50,12 +43,13 @@ $tipotrabajo = $_POST["tipotrabajo"];
  */
 //$query = "UPDATE clinicas SET nombre = '$clinica' WHERE id_clinica = $id_clinica";
 //$query = "UPDATE clinicas SET nombre = 'CENTRO IMPLANTOLOGICO VIGOx' WHERE id_clinica = 3";
+
 $query = "UPDATE prescripciones "
         . "SET id_doctor = $doctor,"
         . "id_clinica = $clinica,"
         . "n_historia = $historia,"
-        . "nom_paciente = $paciente,"
-        . "tipo trabajo = $tipotrabajo "
+        . "nom_paciente = '$paciente',"
+        . "tipo_trabajo = '$tipotrabajo' "
         . "WHERE id_prescripcion = $id_prescripcion";
 
 
