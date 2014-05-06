@@ -1,7 +1,8 @@
 /*
 inicialización de divs ocultos
 */
-.prescripciones{
+.prescripciones, 
+.incidencias{
   display: none;
 }
 

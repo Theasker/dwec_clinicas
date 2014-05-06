@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
   <head>
     <meta charset="utf-8">
@@ -41,7 +41,7 @@
       <div id="page-content-wrapper">
         <div class="content-header">
           <h1>Laboratorio Cyndi Entes, S.A.</h1>
-          
+
         </div>
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
@@ -59,16 +59,18 @@
                     <th>Fecha entrada</th>
                     <th>Fecha fin</th>
                     <th>Editar</th>
-                    <th>Borrar</th>
+                    <th>Historial</th>
+                    <th>Incidencias</th>
                   </tr>
                 </thead>
                 <tbody>
                 </tbody>
               </table>
 
+              <!-- Formulario de edición de prescripciones -->
               <div class="frmedicion" id="basic-modal-content" style="display:none;">              
                 <div class="col-md-12 column">
-                  <form role="form" id="frmprescripciones" >
+                  <form role="form" id="frmprescripciones">
                     <div class="form-group">
                       <input type="hidden" id="id_prescripcion"/>
                       <label for="clinica">Clinica:</label>
@@ -94,15 +96,35 @@
                       <label for="tipotrabajo" >Tipo de trabajo</label>
                       <input class="form-control" type="text" id="tipotrabajo" name="tipotrabajo"/>
                     </div>
-                    
+
                     <input class="btn btn-default" id="enviar" type="submit" value="Enviar"/> 
                   </form>
                 </div>
               </div>
-              
+              <!-- FIN Formulario de edición de prescripciones -->
+
             </div>
           </div>
-          
+
+          <!-- Tabla de incidencias de una prescripción -->
+          <div class="row incidencias">
+            <div class="col-md-12">
+              <h2 class="titulo_incidencias">Incidencias</h2>
+              <table id="tincidencias">
+                <thead>
+                  <tr>
+                    <th>Fecha devolución</th>
+                    <th>Tipo</th>>
+                    <th>Editar</th>>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Tabla de incidencias de una prescripción -->
+
           <footer>
             <div class="well" id="pruebas" style="display:none;"></div>
           </footer>

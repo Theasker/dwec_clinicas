@@ -37,19 +37,30 @@ $(document).ready(function() {
         },
         "bSortable": false,
         "bSearchable": false,
-        "sWidth": "60px"
+        "sWidth": "20px"
       },
       {
         "mData": "id_prescripcion",
         "mRender": function(data, type, full) {
-          return '<a href="./scripts_php/prescripciones_borrar.php?id_prescripcion=' + data + '"><button class="borrarbtn">Borrar</button></a>';
+          return '<a href="./scripts_php/prescripciones_historial.php?id_prescripcion=' + data + '"><button class="historialbtn">Historial</button></a>';
+        },
+      
+        "bSortable": false,
+        "bSearchable": false,
+        "sWidth": "20px"
+      },
+      {
+        "mData": "id_prescripcion",
+        "mRender": function(data, type, full) {
+          return '<a href="./scripts_php/prescripciones_incidencias.php?id_prescripcion=' + data + '"><button class="incidenciasbtn">Listado</button></a>';
         },
         "bSortable": false,
         "bSearchable": false,
-        "sWidth": "60px"
+        "sWidth": "20px"
       }
     ]
   });
+  /* FIN Datatable prescripciones */
 
   /* Edicion de prescripciones */
   $("#tprescripciones").on('click', '.editarbtn', function(e) {
@@ -101,14 +112,14 @@ $(document).ready(function() {
       },
       error: function(xhr, status, error) {
         jQuery.noticeAdd({
-          text: 'Fallo en la actualización',
+          text: data[0].estado+': '+data[0].mensaje,
           stay: false,
           type: 'error'
         });
       },
       success: function(data) {
         jQuery.noticeAdd({
-          text: 'Se han actualizado las tablas prescripciones, clinicas y doctores',
+          text: data[0].mensaje,
           stay: false,
           type: 'succes'
         });
@@ -122,7 +133,14 @@ $(document).ready(function() {
     parent.$.modal.close(); // cierra la ventana modal
   });
   
+  /* Botón listar incidencias */
+  $("#tprescripciones").on('click', '.incidenciasbtn', function(e) {
+    e.preventDefault();
+    tabla_incidencias();
+  });
+  
   // Validación de los campos
+  /*
   $('#frmprescripciones').validate({
     onkeyup: true,
     onfocusout: true,
@@ -150,6 +168,7 @@ $(document).ready(function() {
       }
     }
   });
+  */
 
   // Actualización del combo de doctores según la clínica seleccionada
   $("#clinica").change(function() {
@@ -170,8 +189,11 @@ $(document).ready(function() {
           //mostraríamos alguna ventana de alerta con el error
         },
         success: function(data) {
-          //obtenemos el mensaje del servidor, es un array!!!
-          //var mensaje = (data["mensaje"]) //o data[0], en función del tipo de array!!
+          jQuery.noticeAdd({
+            text: 'Cargado desplegable de clínicas',
+            stay: false,
+            type: 'succes'
+          });
           $("#clinica").empty();
           $.each(data, function() {
             $("#clinica").append($('<option></option>').val(this.id_clinica).html(this.nombre));
@@ -197,8 +219,11 @@ $(document).ready(function() {
         //mostraríamos alguna ventana de alerta con el error
       },
       success: function(data) {
-        //obtenemos el mensaje del servidor, es un array!!!
-        //var mensaje = (data["mensaje"]) //o data[0], en función del tipo de array!!
+        jQuery.noticeAdd({
+          text: 'Cargado desplegable de doctores',
+          stay: false,
+          type: 'succes'
+        });
         $("#doctor").empty();
         $.each(data, function() {
           $("#doctor").append($('<option></option>').val(this.id_doctor).html(this.nombre));
@@ -210,7 +235,9 @@ $(document).ready(function() {
     });
   }
 
+  /* Filtrado de doctores por la clínica seleccionada en el la edición.*/
   function cargar_doctores_de_clinica() {
+    clinica = $("#clinica").val();   
     $.ajax({
       type: 'POST',
       dataType: 'json',
@@ -221,12 +248,74 @@ $(document).ready(function() {
       data: {clinica: clinica},
       error: function(xhr, status, error) {
         //mostraríamos alguna ventana de alerta con el error
-        alert('algo falla');
       },
       success: function(data) {
+        jQuery.noticeAdd({
+            text: 'Actualizado el deplegable de doctores de la clínica seleccionada',
+            stay: false,
+            type: 'succes'
+        });
         $("#doctor").empty();
         $.each(data, function() {
           $("#doctor").append($('<option></option>').val(this.id_doctor).html(this.nombre));
+        });
+      },
+      complete: {
+        //si queremos hacer algo al terminar la petición ajax
+      }
+    });
+  }
+  
+  /* Función que carga la tabla de incidencias */
+  
+  function tabla_incidencias() {
+    $('.prescripciones').fadeOut(100);
+    $('.incidencias').fadeIn(100);
+    /* Datatable incidencias de una prescripcion */
+    tincidencias = $('#tincidencias').dataTable({
+      "bProcessing": true,
+      "bServerSide": true,
+      "bJQueryUI": true,
+      "sAjaxSource": "./scripts_php/incidencias.php",
+      "aoColumns": [
+        {"mData": "fecha_devolucion"},
+        {"mData": "tipo"},
+        {
+          "mData": "id_prescripcion",
+          "mRender": function(data, type, full) {
+            return '<a href="./scripts_php/incidencia_modificar.php?id_prescripcion=' + data + '"><button class="editarbtn">Editar</button></a>';
+          },
+          "bSortable": false,
+          "bSearchable": false,
+          "sWidth": "20px"
+        }
+      ]
+    });
+    /* FIN Datatable incidencias de una prescripcion */
+  }
+  
+  
+  /* Para cargar el combo de tipo de incidencias */
+  function cargar_tipoincidencias() {
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: "./scripts_php/tipoincidencias_listar.php",
+      async: false,
+      error: function(xhr, status, error) {
+        //mostraríamos alguna ventana de alerta con el error
+      },
+      success: function(data) {
+        //obtenemos el mensaje del servidor, es un array!!!
+        //var mensaje = (data["mensaje"]) //o data[0], en función del tipo de array!!
+        jQuery.noticeAdd({
+            text: 'Cargado el listado de tipo de incidencias',
+            stay: false,
+            type: 'succes'
+        });
+        $("#doctor").empty();
+        $.each(data, function() {
+          $("#doctor").append($('<option></option>').val(this.id_incidencia).html(this.tipo));
         });
       },
       complete: {
