@@ -7,10 +7,12 @@
  * you want to insert a non-database field (for example a counter or static image)
  */
 print_r($_REQUEST);
+echo "prescripción -->";
+print_r($id_prescripcion);
 
 $aColumns = array(
   'id_devolucion',
-  'id_prescripcion',
+  'prescripcion',
   'fecha_devolucion',
   'id_incidencia',
   'tipo');

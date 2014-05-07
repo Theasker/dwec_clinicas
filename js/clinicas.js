@@ -33,30 +33,19 @@ $(document).ready(function() {
       {
         "mData": "id_prescripcion",
         "mRender": function(data, type, full) {
-          return '<a href="./scripts_php/prescripciones_modificar.php?id_prescripcion=' + data + '"><button class="editarbtn">Editar</button></a>';
+          return '<a href="./scripts_php/prescripciones_modificar.php?id_prescripcion=' + data + '">\
+          <button title="editar prescripcion" class="editarbtn btn btn-warning">\
+          <i class="glyphicon glyphicon-pencil"></i></button></a>\
+        <a href="./scripts_php/prescripciones_historial.php?id_prescripcion=' + data + '">\
+          <button title="Historial de la prescripcion"  class="historialbtn btn btn-success">\
+          <i class="glyphicon glyphicon-list-alt"></i></button></a>\
+        <a href="./scripts_php/prescripciones_incidencias.php?id_prescripcion=' + data + '">\
+          <button title="Incidencias de la prescripcion"  class="incidenciasbtn btn btn-danger">\
+          <i class="glyphicon glyphicon-warning-sign"></i></button></a>';
         },
         "bSortable": false,
         "bSearchable": false,
-        "sWidth": "20px"
-      },
-      {
-        "mData": "id_prescripcion",
-        "mRender": function(data, type, full) {
-          return '<a href="./scripts_php/prescripciones_historial.php?id_prescripcion=' + data + '"><button class="historialbtn">Historial</button></a>';
-        },
-      
-        "bSortable": false,
-        "bSearchable": false,
-        "sWidth": "20px"
-      },
-      {
-        "mData": "id_prescripcion",
-        "mRender": function(data, type, full) {
-          return '<a href="./scripts_php/prescripciones_incidencias.php?id_prescripcion=' + data + '"><button class="incidenciasbtn">Listado</button></a>';
-        },
-        "bSortable": false,
-        "bSearchable": false,
-        "sWidth": "20px"
+        "sWidth": "100px"
       }
     ]
   });
@@ -74,8 +63,9 @@ $(document).ready(function() {
     $("#paciente").val(aData.nom_paciente);
     $("#historia").val(aData.n_historia);
     $("#tipotrabajo").val(aData.tipo_trabajo);
+    //validar_edicion_prescripciones();
   });
-
+   
   /* Botón enviar del frmedicion */
   $("#enviar").click(function(mievento) {
     mievento.preventDefault();
@@ -112,7 +102,7 @@ $(document).ready(function() {
       },
       error: function(xhr, status, error) {
         jQuery.noticeAdd({
-          text: data[0].estado+': '+data[0].mensaje,
+          text: data[0].estado + ': ' + data[0].mensaje,
           stay: false,
           type: 'error'
         });
@@ -132,79 +122,104 @@ $(document).ready(function() {
     });
     parent.$.modal.close(); // cierra la ventana modal
   });
-  
+
   /* Botón listar incidencias */
   $("#tprescripciones").on('click', '.incidenciasbtn', function(e) {
     e.preventDefault();
-    tabla_incidencias();
+    $('.prescripciones').fadeOut(100);
+    var nRow = $(this).parents('tr')[0];
+    aData = tprescripciones.fnGetData(nRow);
+    $("#id_prescripcion").val(aData.id_prescripcion)
+    $('.incidencias').fadeIn(100);
+    /* Datatable incidencias de una prescripcion */
+    tincidencias = $('#tincidencias').dataTable({
+      "bProcessing": true,
+      "bServerSide": true,
+      "bJQueryUI": true,
+      "sAjaxSource": "./scripts_php/incidencias.php",
+      "aoColumns": [
+        {"mData": "fecha_devolucion"},
+        {"mData": "tipo"},
+        {
+          "mData": "id_prescripcion",
+          "mRender": function(data, type, full) {
+            return '<a href="./scripts_php/incidencia_modificar.php?id_prescripcion=' + data + '"><button class="editarbtn">Editar</button></a>';
+          },
+          "bSortable": false,
+          "bSearchable": false,
+          "sWidth": "20px"
+        }
+      ]
+    });
+    /* FIN Datatable incidencias de una prescripcion */
   });
-  
-  // Validación de los campos
-  /*
-  $('#frmprescripciones').validate({
-    onkeyup: true,
-    onfocusout: true,
-    onclick: true,
-    rules: {
-      clinica: {
-        required: true,
-        lettersonly: true,
-      },
-      doctor: {
-        required: true,
-        todasletras: true
-      },
-      paciente: {
-        required: true,
-        todasletras: true
-      },
-      historia: {
-        required: true,
-        todasletras: true
-      },
-      tipotrabajo: {
-        required: true,
-        todasletras: true
-      }
-    }
-  });
-  */
 
+  // Validación de los campos
+  function validar_edicion_prescripciones() {
+    $('#frmprescripciones').validate({
+      onkeyup: true,
+      onfocusout: false,
+      onclick: true,
+      rules: {
+        clinica: {
+          required: true,
+          lettersonly: true
+        },
+        doctor: {
+          required: true,
+          todasletras: true
+        },
+        paciente: {
+          required: true,
+          todasletras: true
+        },
+        historia: {
+          required: true,
+          todasletras: true
+        },
+        tipotrabajo: {
+          required: true,
+          todasletras: true
+        }
+      }
+    });
+  }
+   
   // Actualización del combo de doctores según la clínica seleccionada
   $("#clinica").change(function() {
     cargar_doctores_de_clinica();
   });
-  
+
   /* Para cargar el combo de clinicas del formulario */
   function cargar_clinicas() {
-      $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url: "./scripts_php/clinicas_listar.php",
-        async: false,
-        //estos son los datos que queremos actualizar, en json:
-        // {parametro1: valor1, parametro2, valor2, ….}
-        //data: { id_clinica: id_clinica, nombre: nombre, ….,  id_tarifa: id_tarifa },
-        error: function(xhr, status, error) {
-          //mostraríamos alguna ventana de alerta con el error
-        },
-        success: function(data) {
-          jQuery.noticeAdd({
-            text: 'Cargado desplegable de clínicas',
-            stay: false,
-            type: 'succes'
-          });
-          $("#clinica").empty();
-          $.each(data, function() {
-            $("#clinica").append($('<option></option>').val(this.id_clinica).html(this.nombre));
-          });
-        },
-        complete: {
-          //si queremos hacer algo al terminar la petición ajax
-        }
-      });
-    }
-  
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: "./scripts_php/clinicas_listar.php",
+      async: false,
+      //estos son los datos que queremos actualizar, en json:
+      // {parametro1: valor1, parametro2, valor2, ….}
+      //data: { id_clinica: id_clinica, nombre: nombre, ….,  id_tarifa: id_tarifa },
+      error: function(xhr, status, error) {
+        //mostraríamos alguna ventana de alerta con el error
+      },
+      success: function(data) {
+        jQuery.noticeAdd({
+          text: 'Cargado desplegable de clínicas',
+          stay: false,
+          type: 'succes'
+        });
+        $("#clinica").empty();
+        $.each(data, function() {
+          $("#clinica").append($('<option></option>').val(this.id_clinica).html(this.nombre));
+        });
+      },
+      complete: {
+        //si queremos hacer algo al terminar la petición ajax
+      }
+    });
+  }
+
   /* Para cargar el combo de doctores del formulario */
   function cargar_doctores() {
     $.ajax({
@@ -237,7 +252,7 @@ $(document).ready(function() {
 
   /* Filtrado de doctores por la clínica seleccionada en el la edición.*/
   function cargar_doctores_de_clinica() {
-    clinica = $("#clinica").val();   
+    clinica = $("#clinica").val();
     $.ajax({
       type: 'POST',
       dataType: 'json',
@@ -251,9 +266,9 @@ $(document).ready(function() {
       },
       success: function(data) {
         jQuery.noticeAdd({
-            text: 'Actualizado el deplegable de doctores de la clínica seleccionada',
-            stay: false,
-            type: 'succes'
+          text: 'Actualizado el deplegable de doctores de la clínica seleccionada',
+          stay: false,
+          type: 'succes'
         });
         $("#doctor").empty();
         $.each(data, function() {
@@ -265,36 +280,7 @@ $(document).ready(function() {
       }
     });
   }
-  
-  /* Función que carga la tabla de incidencias */
-  
-  function tabla_incidencias() {
-    $('.prescripciones').fadeOut(100);
-    $('.incidencias').fadeIn(100);
-    /* Datatable incidencias de una prescripcion */
-    tincidencias = $('#tincidencias').dataTable({
-      "bProcessing": true,
-      "bServerSide": true,
-      "bJQueryUI": true,
-      "sAjaxSource": "./scripts_php/incidencias.php",
-      "aoColumns": [
-        {"mData": "fecha_devolucion"},
-        {"mData": "tipo"},
-        {
-          "mData": "id_prescripcion",
-          "mRender": function(data, type, full) {
-            return '<a href="./scripts_php/incidencia_modificar.php?id_prescripcion=' + data + '"><button class="editarbtn">Editar</button></a>';
-          },
-          "bSortable": false,
-          "bSearchable": false,
-          "sWidth": "20px"
-        }
-      ]
-    });
-    /* FIN Datatable incidencias de una prescripcion */
-  }
-  
-  
+
   /* Para cargar el combo de tipo de incidencias */
   function cargar_tipoincidencias() {
     $.ajax({
@@ -309,9 +295,9 @@ $(document).ready(function() {
         //obtenemos el mensaje del servidor, es un array!!!
         //var mensaje = (data["mensaje"]) //o data[0], en función del tipo de array!!
         jQuery.noticeAdd({
-            text: 'Cargado el listado de tipo de incidencias',
-            stay: false,
-            type: 'succes'
+          text: 'Cargado el listado de tipo de incidencias',
+          stay: false,
+          type: 'succes'
         });
         $("#doctor").empty();
         $.each(data, function() {
@@ -323,7 +309,7 @@ $(document).ready(function() {
       }
     });
   }
-  
+
   cargar_clinicas();
   cargar_doctores();
   /* Fin prescripciones  */

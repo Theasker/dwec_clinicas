@@ -11,6 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link href="css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.css">
 
     <!-- Add custom CSS here -->
@@ -19,7 +20,7 @@
     <!--    <link href="css/jquery-ui-1.10.4.custom.css" rel="stylesheet">-->
     <!-- Tema con sidebar -->
     <!--    http://startbootstrap.com/templates/simple-sidebar.html -->
-    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link href="css/jquery-ui-1.10.4.custom.css" rel="stylesheet">
     <link href="css/modalbasico.css" rel="stylesheet">
     <link href="css/jquery.notice.css" rel="stylesheet">
     <link href="css/clinicas.css" rel="stylesheet">
@@ -33,7 +34,7 @@
       <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
           <li class="sidebar-brand"><a id="reset" href="#">Inicio</a></li>
-          <li><a id="lnkprescripciones" href="#">Prescripciones</a></li>
+          <li><a id="lnkprescripciones" href="#">Prescripciones</a></li>          
         </ul>
       </div>
 
@@ -41,7 +42,6 @@
       <div id="page-content-wrapper">
         <div class="content-header">
           <h1>Laboratorio Cyndi Entes, S.A.</h1>
-
         </div>
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
@@ -58,9 +58,7 @@
                     <th>Tipo de trabajo</th>
                     <th>Fecha entrada</th>
                     <th>Fecha fin</th>
-                    <th>Editar</th>
-                    <th>Historial</th>
-                    <th>Incidencias</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -134,6 +132,7 @@
 
     <!-- JavaScript -->
     <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
     <script type="text/javascript" src="js/jquery.dataTables-1.9.4.js"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script type='text/javascript' src='js/jquery.simplemodal.js'></script>
