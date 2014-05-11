@@ -1,9 +1,3 @@
-/* requerimiento 1: visualización de prescripciones
- * Clínica y Doctor, Paciente y Número de Historia,
- * Fecha de entrada del trabajo al laboratorio y 
- * fecha de salida y Tipo de trabajo 
- */
-
 $(document).ready(function() {
   $.ajaxSetup({cache: false});
   $('#reset').click(function() {
@@ -126,24 +120,30 @@ $(document).ready(function() {
   /* Botón listar incidencias */
   $("#tprescripciones").on('click', '.incidenciasbtn', function(e) {
     e.preventDefault();
-    $('.prescripciones').fadeOut(100);
+    $('.prescripciones').fadeOut(300);
     var nRow = $(this).parents('tr')[0];
     aData = tprescripciones.fnGetData(nRow);
-    $("#id_prescripcion").val(aData.id_prescripcion)
+    $("#id_prescripcion").val(aData.id_prescripcion);
     $('.incidencias').fadeIn(100);
+    alert("id_prescripcion: " + aData.id_prescripcion);
     /* Datatable incidencias de una prescripcion */
     tincidencias = $('#tincidencias').dataTable({
+      //"bRetrieve": true,
+      "bDestroy": true,
       "bProcessing": true,
       "bServerSide": true,
       "bJQueryUI": true,
       "sAjaxSource": "./scripts_php/incidencias.php",
+      "fnServerParams": function ( aoData ) {
+            aoData.push( { "name": "id_prescripcion", "value": aData.id_prescripcion} );
+        },
       "aoColumns": [
         {"mData": "fecha_devolucion"},
         {"mData": "tipo"},
         {
-          "mData": "id_prescripcion",
+          "mData": "prescripcion",
           "mRender": function(data, type, full) {
-            return '<a href="./scripts_php/incidencia_modificar.php?id_prescripcion=' + data + '"><button class="editarbtn">Editar</button></a>';
+            return '<a href="./scripts_php/incidencia_modificar.php?prescripcion=' + data + '"><button class="editarbtn">Editar</button></a>';
           },
           "bSortable": false,
           "bSearchable": false,

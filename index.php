@@ -112,8 +112,8 @@
                 <thead>
                   <tr>
                     <th>Fecha devolución</th>
-                    <th>Tipo</th>>
-                    <th>Editar</th>>
+                    <th>Tipo</th>
+                    <th>Editar</th>
                   </tr>
                 </thead>
                 <tbody>

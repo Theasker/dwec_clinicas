@@ -1,14 +1,12 @@
 <?php
-
+//var_dump($_REQUEST['id_prescripcion']);
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Easy set variables
  */
 /* Array of database columns which should be read and sent back to DataTables. Use a space where
  * you want to insert a non-database field (for example a counter or static image)
  */
-print_r($_REQUEST);
-echo "prescripción -->";
-print_r($id_prescripcion);
+
 
 $aColumns = array(
   'id_devolucion',
@@ -16,6 +14,9 @@ $aColumns = array(
   'fecha_devolucion',
   'id_incidencia',
   'tipo');
+// Capturo el número de prescripción enviado desde datatable del registro seleccionado
+$id_prescripcion = $_REQUEST['id_prescripcion'];
+
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "id_devolucion";
@@ -95,6 +96,7 @@ if (isset($_GET['iSortCol_0'])) {
  * word by word on any field. It's possible to do here, but concerned about efficiency
  * on very large tables, and MySQL's regex functionality is very limited
  */
+
 $sWhere = "";
 if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
   $sWhere = "WHERE (";
@@ -125,6 +127,7 @@ for ($i = 0; $i < count($aColumns); $i++) {
  * SQL queries
  * Get data to display
  */
+$sWhere = " WHERE prescripcion = $id_prescripcion";
 $sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS " . str_replace(" , ", " ", implode(", ", $aColumns)) . "
 		FROM   $sTable
