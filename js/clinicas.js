@@ -8,6 +8,13 @@ $(document).ready(function() {
   /* Mostramos la tabla */
   $('#lnkprescripciones').click(function() {
     $('.prescripciones').show();
+    $('.incidencias').hide();
+  });
+  
+  $('#lnkvolverprescripciones').click(function() {
+    $('.prescripciones').fadeIn(300);
+    $('.incidencias').fadeOut(300);
+    $('.historial').fadeOut(300);
   });
 
   /* Datatable prescripciones */
@@ -47,6 +54,7 @@ $(document).ready(function() {
 
   /* Edicion de prescripciones */
   $("#tprescripciones").on('click', '.editarbtn', function(e) {
+    //validar_edicion_prescripciones();
     e.preventDefault();
     $("#basic-modal-content").modal();
     var nRow = $(this).parents('tr')[0];
@@ -117,6 +125,47 @@ $(document).ready(function() {
     parent.$.modal.close(); // cierra la ventana modal
   });
 
+  /* Botón listar historial (historialbtn) */
+  $("#tprescripciones").on('click', '.historialbtn', function(e) {
+    e.preventDefault();
+    $('.prescripciones').fadeOut(300);
+    var nRow = $(this).parents('tr')[0];
+    aData = tprescripciones.fnGetData(nRow);
+    $('.historial').fadeIn(300);
+    /* Datatable historial de una prescripcion */
+    thistorial = $('#thistorial').dataTable({
+      "bDestroy": true,
+      "bProcessing": true,
+      "bServerSide": true,
+      "bJQueryUI": true,
+      "sAjaxSource": "./scripts_php/historial.php",
+      /* Le pasamos como parámetro el id_prescripcion para filtrar
+       * los registros de historial por prescripcion en el script php
+       * que llamamos por ajax */
+      "fnServerParams": function ( aoData ) {
+            aoData.push( { "name": "id_prescripcion", "value": aData.id_prescripcion} );
+        },
+      "aoColumns": [
+        {"mData": "salida_cli"},
+        {"mData": "entrada_lab"},
+        {"mData": "salida_lab"},
+        {"mData": "observaciones"},
+        {"mData": "cita"},
+        {
+          "mData": "id_prescripcion",
+          "mRender": function(data, type, full) {
+            return '<a href="./scripts_php/historial_eliminar.php?id_prescripcion=' + data + '">\
+            <button class="eliminarhistorialbtn btn btn-danger">\
+            <i class="glyphicon glyphicon-trash"></button></a>';
+          },
+          "bSortable": false,
+          "bSearchable": false,
+          "sWidth": "20px"
+        }
+      ]
+    });
+  });
+
   /* Botón listar incidencias */
   $("#tprescripciones").on('click', '.incidenciasbtn', function(e) {
     e.preventDefault();
@@ -124,8 +173,8 @@ $(document).ready(function() {
     var nRow = $(this).parents('tr')[0];
     aData = tprescripciones.fnGetData(nRow);
     $("#id_prescripcion").val(aData.id_prescripcion);
-    $('.incidencias').fadeIn(100);
-    alert("id_prescripcion: " + aData.id_prescripcion);
+    $('.incidencias').fadeIn(300);
+    //alert("id_prescripcion: " + aData.id_prescripcion);
     /* Datatable incidencias de una prescripcion */
     tincidencias = $('#tincidencias').dataTable({
       //"bRetrieve": true,
@@ -154,32 +203,27 @@ $(document).ready(function() {
     /* FIN Datatable incidencias de una prescripcion */
   });
 
-  // Validación de los campos
+  // Validación de los campos de edición de 
   function validar_edicion_prescripciones() {
     $('#frmprescripciones').validate({
+      debug:true,
       onkeyup: true,
-      onfocusout: false,
       onclick: true,
       rules: {
         clinica: {
-          required: true,
-          lettersonly: true
+          required: true
         },
         doctor: {
-          required: true,
-          todasletras: true
+          required: true
         },
         paciente: {
-          required: true,
-          todasletras: true
+          required: true
         },
         historia: {
-          required: true,
-          todasletras: true
+          required: true
         },
         tipotrabajo: {
-          required: true,
-          todasletras: true
+          required: true
         }
       }
     });

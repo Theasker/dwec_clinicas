@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+  <head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <form role="form" id="frmprescripciones" novalidate action="" method="post">
+      <div class="form-group">
+        <input type="hidden" id="id_prescripcion"/>
+        <label for="clinica">Clinica:</label>
+        <select class="form-control" id="clinica" name="clinica">
+
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="doctor" >Doctor</label>
+        <select class="form-control" id="doctor" name="doctor">
+
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="paciente" >Paciente</label>
+        <input class="form-control" type="text" id="paciente" name="paciente"/>
+      </div>
+      <div class="form-group">
+        <label for="historia" >Nº historia</label>
+        <input class="form-control" type="text" id="historia" name="historia"/>
+      </div>
+      <div class="form-group">
+        <label for="tipotrabajo" >Tipo de trabajo</label>
+        <input class="form-control" type="text" id="tipotrabajo" name="tipotrabajo"/>
+      </div>
+
+      <input class="btn btn-default" id="enviar" type="submit" value="Enviar"/> 
+    </form>
+    
+    
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    
+    <script type='text/javascript' src='js/jquery.validate.js'></script>
+    <script type='text/javascript' src='js/messages_es.js'></script>
+    <script>
+      $('#frmprescripciones').validate({
+      onkeyup: true,
+      onfocusout: false,
+      onclick: true,
+      rules: {
+        clinica: {
+          required: true,
+          lettersonly: true
+        },
+        doctor: {
+          required: true,
+          todasletras: true
+        },
+        paciente: {
+          required: true,
+          todasletras: true
+        },
+        historia: {
+          required: true,
+          todasletras: true
+        },
+        tipotrabajo: {
+          required: true,
+          todasletras: true
+        }
+      }
+    });
+  
+    </script>
+  </body>
+</html>

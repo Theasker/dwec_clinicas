@@ -34,7 +34,7 @@
       <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
           <li class="sidebar-brand"><a id="reset" href="#">Inicio</a></li>
-          <li><a id="lnkprescripciones" href="#">Prescripciones</a></li>          
+          <li><a id="lnkprescripciones" href="#">Prescripciones</a></li>
         </ul>
       </div>
 
@@ -48,6 +48,7 @@
           <div class="row prescripciones">
             <div class="col-md-12">
               <h2>Prescripciones</h2>
+              <!-- Tabla prescripciones-->
               <table id="tprescripciones">
                 <thead>
                   <tr>
@@ -64,11 +65,12 @@
                 <tbody>
                 </tbody>
               </table>
+              <!-- FIN Tabla prescripciones-->
 
               <!-- Formulario de edición de prescripciones -->
               <div class="frmedicion" id="basic-modal-content" style="display:none;">              
                 <div class="col-md-12 column">
-                  <form role="form" id="frmprescripciones">
+                  <form role="form" id="frmprescripciones" novalidate action="" method="post">
                     <div class="form-group">
                       <input type="hidden" id="id_prescripcion"/>
                       <label for="clinica">Clinica:</label>
@@ -104,6 +106,33 @@
             </div>
           </div>
 
+          <!-- Tabla de historial de una prescripción -->
+          <div class="row historial">
+            <div class="col-md-12">
+              <h2 class="titulo_historial">Historial</h2>
+              <table id="thistorial">
+                <thead>
+                  <tr>
+                    <th>Salida clínica</th>
+                    <th>Entrada lab.</th>
+                    <th>Salida lab</th>
+                    <th>Observaciones</th>
+                    <th>Cita</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+              <div class="col-md-1 col-md-offset-10">
+                <a id="lnkvolverprescripciones" class="btn btn-primary" href="#">
+                  Volver
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Tabla de incidencias de una prescripción -->
+          
           <!-- Tabla de incidencias de una prescripción -->
           <div class="row incidencias">
             <div class="col-md-12">
@@ -119,6 +148,11 @@
                 <tbody>
                 </tbody>
               </table>
+              <div class="col-md-1 col-md-offset-10">
+                <a id="lnkvolver" class="btn btn-primary" href="#">
+                  Volver
+                </a>
+              </div>
             </div>
           </div>
           <!-- Tabla de incidencias de una prescripción -->
@@ -131,15 +165,19 @@
     </div>
 
     <!-- JavaScript -->
-    <script type="text/javascript" src="js/jquery.js"></script>
+<!--    <script type="text/javascript" src="js/jquery.js"></script>-->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
     <script type="text/javascript" src="js/jquery.dataTables-1.9.4.js"></script>
+    
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script type='text/javascript' src='js/jquery.simplemodal.js'></script>
     <script type='text/javascript' src='js/jquery.notice.js'></script>
     <script type='text/javascript' src='js/jquery.validate.js'></script>
     <script type='text/javascript' src='js/messages_es.js'></script>
     <script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script type='text/javascript' src='js/jquery.validate.js'></script>
+    <script type='text/javascript' src='js/messages_es.js'></script>
     <!--    <script src="js/bootstrap.js"></script>-->
 
     <script src="js/clinicas.js"></script>

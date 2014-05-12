@@ -2,6 +2,7 @@
 inicialización de divs ocultos
 */
 .prescripciones, 
+.historial,
 .incidencias{
   display: none;
 }
