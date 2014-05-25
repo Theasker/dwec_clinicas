@@ -3,18 +3,18 @@ $(document).ready(function() {
   $('#reset').click(function() {
     $('.prescripciones').hide();
   });
-  /* prescripciones ================================ */
+  /* prescripciones */
 
-  /* Mostramos la tabla */
-  $('#lnkprescripciones').click(function() {
-    $('.prescripciones').show();
-    $('.incidencias').hide();
-  });
-  
   $('#lnkvolverprescripciones').click(function() {
-    $('.prescripciones').fadeIn(300);
     $('.incidencias').fadeOut(300);
     $('.historial').fadeOut(300);
+    $('.prescripciones').fadeIn(300);
+  });
+  
+  $('#vuelvo').click(function() {
+    $('.incidencias').fadeOut(300);
+    $('.historial').fadeOut(300);
+    $('.prescripciones').fadeIn(300);
   });
 
   /* Datatable prescripciones */
@@ -54,9 +54,12 @@ $(document).ready(function() {
 
   /* Edicion de prescripciones */
   $("#tprescripciones").on('click', '.editarbtn', function(e) {
-    //validar_edicion_prescripciones();
+    validar_edicion_prescripciones();
     e.preventDefault();
-    $("#basic-modal-content").modal();
+    $("#editprescripciones").modal({
+	minHeight:450,
+	minWidth: 600
+    });
     var nRow = $(this).parents('tr')[0];
     aData = tprescripciones.fnGetData(nRow);
     $("#id_prescripcion").val(aData.id_prescripcion);
@@ -155,7 +158,7 @@ $(document).ready(function() {
           "mData": "id_prescripcion",
           "mRender": function(data, type, full) {
             return '<a href="./scripts_php/historial_eliminar.php?id_prescripcion=' + data + '">\
-            <button class="eliminarhistorialbtn btn btn-danger">\
+            <button title="Borrar del historial de la prescripción"   class="btnborrarhistorial btn btn-danger">\
             <i class="glyphicon glyphicon-trash"></button></a>';
           },
           "bSortable": false,
@@ -163,6 +166,15 @@ $(document).ready(function() {
           "sWidth": "20px"
         }
       ]
+    });
+  });
+
+  /* Botón borrar entrada de historial */
+  $("#thistorial").on('click','.btnborrarhistorial', function(e) {
+    e.preventDefault();
+    $("#validarborrarhistorial").modal({
+	minHeight:170,
+	minWidth: 430
     });
   });
 

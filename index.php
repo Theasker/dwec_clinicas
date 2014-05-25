@@ -24,6 +24,10 @@
     <link href="css/modalbasico.css" rel="stylesheet">
     <link href="css/jquery.notice.css" rel="stylesheet">
     <link href="css/clinicas.css" rel="stylesheet">
+    
+    <script src="./js/jquery-1.10.2.js"></script>
+    <script type='text/javascript' src='js/jquery.notice.js'></script>
+    <script type='text/javascript' src='js/jquery.validate.js'></script>
   </head>
 
   <body>
@@ -34,7 +38,7 @@
       <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
           <li class="sidebar-brand"><a id="reset" href="#">Inicio</a></li>
-          <li><a id="lnkprescripciones" href="#">Prescripciones</a></li>
+          <li><a id="lnkvolverprescripciones" href="#">Prescripciones</a></li>
         </ul>
       </div>
 
@@ -68,7 +72,7 @@
               <!-- FIN Tabla prescripciones-->
 
               <!-- Formulario de edición de prescripciones -->
-              <div class="frmedicion" id="basic-modal-content" style="display:none;">              
+              <div class="frmedicion" id="editprescripciones" style="display:none;">              
                 <div class="col-md-12 column">
                   <form role="form" id="frmprescripciones" novalidate action="" method="post">
                     <div class="form-group">
@@ -102,7 +106,6 @@
                 </div>
               </div>
               <!-- FIN Formulario de edición de prescripciones -->
-
             </div>
           </div>
 
@@ -124,14 +127,32 @@
                 <tbody>
                 </tbody>
               </table>
-              <div class="col-md-1 col-md-offset-10">
-                <a id="lnkvolverprescripciones" class="btn btn-primary" href="#">
+              <div class="col-md-1 col-md-offset-11">
+                <a id="vuelvo" class="btn btn-primary" href="#">
                   Volver
                 </a>
               </div>
             </div>
           </div>
-          <!-- Tabla de incidencias de una prescripción -->
+          <!-- Tabla de historial de una prescripción -->
+          
+          <!-- Formulario de validación de borrado de historial -->
+              <div class="frmborrarhistorial" id="validarborrarhistorial" style="display:none;">              
+<!--                <div class="col-md-12 column">-->
+                  <form role="form" id="frmborrarhistorial" novalidate action="" method="post">
+                    <div class="form-group">
+                      <h3>Borrar datos de la prescripción</h3>
+                      ¿Desea borrar esta entrada del historial de la prescripción?
+                      <input type="hidden" id="id_historial"/>
+                      </select>
+                    </div>
+                    <input class="btn btn-info col-md-2 col-lg-offset-8" id="cancelar" type="submit" value="Cancelar"/> 
+                    <input class="btn btn-danger col-md-2" id="btnborradohistorial" type="submit" value="Borrar"/> 
+                  </form>
+<!--                </div>-->
+              </div>
+              <!-- FIN Formulario de validación de borrado de historial -->
+          
           
           <!-- Tabla de incidencias de una prescripción -->
           <div class="row incidencias">
