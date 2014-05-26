@@ -178,6 +178,44 @@ $(document).ready(function() {
     });
   });
 
+  /* Botón añadir entrada en el historial */
+  $('#btnnuevahistoria').click(function(e) {
+    e.preventDefault();
+    $(".frmnuevahistoria").modal({
+	minHeight: 520,
+	minWidth: 500
+    });
+    $('.frmnuevahistoria #cita').blur();
+    $('.frmnuevahistoria #id_prescripcion').val(aData.id_prescripcion);
+    //$('#pruebas').html('la prescripcion seleccionada es '+aData.id_prescripcion);
+    //$('#pruebas').show();
+  });
+  
+  
+  /* Inicialización en español para la extensión 'UI date picker' para jQuery. */
+  /* Traducido por Vester (xvester [en] gmail [punto] com). */
+  jQuery(function($) {
+    $.datepicker.regional['es'] = {
+      closeText: 'Cerrar',
+      prevText: '<Ant',
+      nextText: 'Sig>',
+      currentText: 'Hoy',
+      monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+      dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+      dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+      dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+      weekHeader: 'Sm',
+      dateFormat: 'yy/mm/dd',
+      firstDay: 1,
+      isRTL: false,
+      showMonthAfterYear: false,
+      yearSuffix: ''};
+    $.datepicker.setDefaults($.datepicker.regional['es']);
+  }); 
+  $("#cita").datepicker({ });
+  
+  
   /* Botón listar incidencias */
   $("#tprescripciones").on('click', '.incidenciasbtn', function(e) {
     e.preventDefault();

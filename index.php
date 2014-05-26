@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,11 +28,8 @@
     <script type='text/javascript' src='js/jquery.notice.js'></script>
     <script type='text/javascript' src='js/jquery.validate.js'></script>
   </head>
-
   <body>
-
     <div id="wrapper">
-
       <!-- Sidebar -->
       <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
@@ -100,8 +96,9 @@
                       <label for="tipotrabajo" >Tipo de trabajo</label>
                       <input class="form-control" type="text" id="tipotrabajo" name="tipotrabajo"/>
                     </div>
-
-                    <input class="btn btn-default" id="enviar" type="submit" value="Enviar"/> 
+                    <div class="col-md-1 col-md-offset-10 text-right">
+                      <input class="btn btn-default" id="enviar" type="submit" value="Enviar"/> 
+                    </div>                    
                   </form>
                 </div>
               </div>
@@ -127,7 +124,12 @@
                 <tbody>
                 </tbody>
               </table>
-              <div class="col-md-1 col-md-offset-11">
+              <div class="col-md-1 col-md-offset-10">
+                <a title="Nueva entrada de historial" id="btnnuevahistoria" class="btn btn-warning" href="#">
+                  <i class="glyphicon glyphicon-plus"></i>
+                </a>
+              </div>
+              <div class="col-md-1">
                 <a id="vuelvo" class="btn btn-primary" href="#">
                   Volver
                 </a>
@@ -151,8 +153,41 @@
                   </form>
 <!--                </div>-->
               </div>
-              <!-- FIN Formulario de validación de borrado de historial -->
+          <!-- FIN Formulario de validación de borrado de historial -->
           
+          <!-- Formulario de nueva entrada de historial -->
+          <div class="frmnuevahistoria" style="display:none;">              
+            <div class="col-md-12 column">
+              <h3>Nueva entrada de historial</h3>
+              <form role="form" id="frmnuevahistoria" novalidate action="" method="post">
+                <div class="form-group">
+                  <input type="hidden" id="id_prescripcion"/>
+                  <label for="cita">Cita</label>
+                  <input class="form-control" type="text" id="cita" name="cita"/>
+                </div>
+                <div class="form-group">
+                  <label for="salida_cli" >Salida clínica</label>
+                  <input class="form-control" type="text" id="salida_cli" name="salida_cli"/>
+                </div>
+                <div class="form-group">
+                  <label for="entrada_lab" >Entrada a laboratorio</label>
+                  <input class="form-control" type="text" id="entrada_lab" name="entrada_lab"/>
+                </div>
+                <div class="form-group">
+                  <label for="salida_lab" >Salida de laboratorio</label>
+                  <input class="form-control" type="text" id="salida_lab" name="salida_lab"/>
+                </div>
+                <div class="form-group">
+                  <label for="observaciones" >Observaciones</label>
+                  <input class="form-control" type="text" id="observaciones" name="tipotrabajo"/>
+                </div>
+                <div class="col-md-1 col-md-offset-10 text-right">
+                  <input class="btn btn-default" id="enviarhistoria" type="submit" value="Guardar"/> 
+                </div>                    
+              </form>
+            </div>
+          </div>
+          <!-- FIN Formulario de nueva entrada de historial -->
           
           <!-- Tabla de incidencias de una prescripción -->
           <div class="row incidencias">
