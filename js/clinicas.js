@@ -189,8 +189,14 @@ $(document).ready(function() {
     $('.frmnuevahistoria #id_prescripcion').val(aData.id_prescripcion);
     //$('#pruebas').html('la prescripcion seleccionada es '+aData.id_prescripcion);
     //$('#pruebas').show();
+    $("#cita").datepicker({ });
+    
   });
   
+  /* Botón enviar entrada en el historial */
+  $('#enviarhistoria').click(function(mievento) {
+    mievento.preventDefault();
+  });
   
   /* Inicialización en español para la extensión 'UI date picker' para jQuery. */
   /* Traducido por Vester (xvester [en] gmail [punto] com). */
@@ -213,7 +219,6 @@ $(document).ready(function() {
       yearSuffix: ''};
     $.datepicker.setDefaults($.datepicker.regional['es']);
   }); 
-  $("#cita").datepicker({ });
   
   
   /* Botón listar incidencias */
