@@ -23,7 +23,7 @@
     <link href="css/modalbasico.css" rel="stylesheet">
     <link href="css/jquery.notice.css" rel="stylesheet">
     <link href="css/clinicas.css" rel="stylesheet">
-    
+
     <script src="./js/jquery-1.10.2.js"></script>
     <script type='text/javascript' src='js/jquery.notice.js'></script>
     <script type='text/javascript' src='js/jquery.validate.js'></script>
@@ -137,24 +137,24 @@
             </div>
           </div>
           <!-- Tabla de historial de una prescripción -->
-          
+
           <!-- Formulario de validación de borrado de historial -->
-              <div class="frmborrarhistorial" id="validarborrarhistorial" style="display:none;">              
-<!--                <div class="col-md-12 column">-->
-                  <form role="form" id="frmborrarhistorial" novalidate action="" method="post">
-                    <div class="form-group">
-                      <h3>Borrar datos de la prescripción</h3>
-                      ¿Desea borrar esta entrada del historial de la prescripción?
-                      <input type="hidden" id="id_historial"/>
-                      </select>
-                    </div>
-                    <input class="btn btn-info col-md-2 col-lg-offset-8" id="cancelar" type="submit" value="Cancelar"/> 
-                    <input class="btn btn-danger col-md-2" id="btnborradohistorial" type="submit" value="Borrar"/> 
-                  </form>
-<!--                </div>-->
+          <div class="frmborrarhistorial" id="validarborrarhistorial" style="display:none;">              
+            <!--                <div class="col-md-12 column">-->
+            <form role="form" id="frmborrarhistorial" novalidate action="" method="post">
+              <div class="form-group">
+                <h3>Borrar datos de la prescripción</h3>
+                ¿Desea borrar esta entrada del historial de la prescripción?
+                <input type="hidden" id="id_historial"/>
+                </select>
               </div>
+              <input class="btn btn-info col-md-2 col-lg-offset-8" id="cancelar" type="submit" value="Cancelar"/> 
+              <input class="btn btn-danger col-md-2" id="btnborradohistorial" type="submit" value="Borrar"/> 
+            </form>
+            <!--                </div>-->
+          </div>
           <!-- FIN Formulario de validación de borrado de historial -->
-          
+
           <!-- Formulario de nueva entrada de historial -->
           <div class="frmnuevahistoria" style="display:none;">              
             <div class="col-md-12 column">
@@ -188,7 +188,7 @@
             </div>
           </div>
           <!-- FIN Formulario de nueva entrada de historial -->
-          
+
           <!-- Tabla de incidencias de una prescripción -->
           <div class="row incidencias">
             <div class="col-md-12">
@@ -196,7 +196,7 @@
               <table id="tincidencias">
                 <thead>
                   <tr>
-                    <th>Fecha devolución</th>
+                    <th>Fecha</th>
                     <th>Tipo</th>
                     <th>Editar</th>
                   </tr>
@@ -225,7 +225,6 @@
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
     <script type="text/javascript" src="js/jquery.dataTables-1.9.4.js"></script>
-    
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script type='text/javascript' src='js/jquery.simplemodal.js'></script>
     <script type='text/javascript' src='js/jquery.notice.js'></script>

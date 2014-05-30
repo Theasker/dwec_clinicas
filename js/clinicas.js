@@ -37,16 +37,13 @@ $(document).ready(function() {
           return '<a href="./scripts_php/prescripciones_modificar.php?id_prescripcion=' + data + '">\
           <button title="editar prescripcion" class="editarbtn btn btn-warning">\
           <i class="glyphicon glyphicon-pencil"></i></button></a>\
-        <a href="./scripts_php/prescripciones_historial.php?id_prescripcion=' + data + '">\
+          <a href="./scripts_php/prescripciones_historial.php?id_prescripcion=' + data + '">\
           <button title="Historial de la prescripcion"  class="historialbtn btn btn-success">\
-          <i class="glyphicon glyphicon-list-alt"></i></button></a>\
-        <a href="./scripts_php/prescripciones_incidencias.php?id_prescripcion=' + data + '">\
-          <button title="Incidencias de la prescripcion"  class="incidenciasbtn btn btn-danger">\
-          <i class="glyphicon glyphicon-warning-sign"></i></button></a>';
+          <i class="glyphicon glyphicon-list-alt"></i></button></a>';
         },
         "bSortable": false,
         "bSearchable": false,
-        "sWidth": "100px"
+        "sWidth": "80px"
       }
     ]
   });
@@ -82,13 +79,13 @@ $(document).ready(function() {
     paciente = $("#paciente").val();
     historia = $("#historia").val();
     tipotrabajo = $("#tipotrabajo").val();
-    $('#pruebas').show();
-    $('#pruebas').html('prescripcion:' + id_prescripcion +
+    //$('#pruebas').show();
+    /*$('#pruebas').html('prescripcion:' + id_prescripcion +
                                 '<br>id_clinica:' + id_clinica +
                                 '<br>clinica:' + clinica +
                                 '<br>id_doctor:' + id_doctor +
                                 '<br>doctor:' + doctor);
-
+    */
     $.ajax({
       type: 'POST',
       dataType: 'json',
@@ -159,7 +156,10 @@ $(document).ready(function() {
           "mRender": function(data, type, full) {
             return '<a href="./scripts_php/historial_eliminar.php?id_prescripcion=' + data + '">\
             <button title="Borrar del historial de la prescripción"   class="btnborrarhistorial btn btn-danger">\
-            <i class="glyphicon glyphicon-trash"></button></a>';
+            <i class="glyphicon glyphicon-trash"></button></a>\n\
+          <a href="./scripts_php/prescripciones_incidencias.php?id_prescripcion=' + data + '">\
+            <button title="Incidencias de la prescripcion"  class="incidenciasbtn btn btn-danger">\
+            <i class="glyphicon glyphicon-warning-sign"></i></button></a>';
           },
           "bSortable": false,
           "bSearchable": false,
@@ -182,20 +182,68 @@ $(document).ready(function() {
   $('#btnnuevahistoria').click(function(e) {
     e.preventDefault();
     $(".frmnuevahistoria").modal({
-	minHeight: 520,
-	minWidth: 500
+      minHeight: 520,
+      minWidth: 500
     });
     $('.frmnuevahistoria #cita').blur();
     $('.frmnuevahistoria #id_prescripcion').val(aData.id_prescripcion);
     //$('#pruebas').html('la prescripcion seleccionada es '+aData.id_prescripcion);
     //$('#pruebas').show();
+    // 
+    jQuery('#cita,#salida_cli,#entrada_lab,#salida_lab').keypress(function() {
+      return false;
+    });
     $("#cita").datepicker({ });
-    
+    $("#salida_cli").datepicker({ });
+    $("#entrada_lab").datepicker({ });
+    $("#salida_lab").datepicker({ });
   });
   
   /* Botón enviar entrada en el historial */
   $('#enviarhistoria').click(function(mievento) {
     mievento.preventDefault();
+    cita = $('#cita').val();
+    salida_cli = $('#salida_cli').val();
+    entrada_lab = $('#entrada_lab').val();
+    salida_lab = $('#salida_lab').val();
+    observaciones = $('#observaciones').val();
+    $('#pruebas').show();
+    $('#pruebas').html(aData.id_prescripcion);
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: "./scripts_php/historial_nuevo.php",
+      async: false,
+      //estos son los datos que queremos actualizar, en json:
+      data: {
+        id_prescripcion: aData.id_prescripcion,
+        cita: cita,
+        salida_cli: salida_cli,
+        entrada_lab: entrada_lab,
+        salida_lab: salida_lab,
+        observaciones: observaciones
+      },
+      error: function(xhr, status, error) {
+        jQuery.noticeAdd({
+          text: data[0].estado + ': ' + data[0].mensaje,
+          stay: false,
+          type: 'error'
+        });
+      },
+      success: function(data) {
+        jQuery.noticeAdd({
+          text: data[0].mensaje,
+          stay: false,
+          type: 'succes'
+        });
+        var $mitabla = $("#thistorial").dataTable({bRetrieve: true});
+        $mitabla.fnDraw();
+      },
+      complete: {
+        //si queremos hacer algo al terminar la petición ajax
+      }
+    });
+    parent.$.modal.close(); // cierra la ventana modal
   });
   
   /* Inicialización en español para la extensión 'UI date picker' para jQuery. */
@@ -212,7 +260,7 @@ $(document).ready(function() {
       dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
       dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
       weekHeader: 'Sm',
-      dateFormat: 'yy/mm/dd',
+      dateFormat: 'yy-mm-dd',
       firstDay: 1,
       isRTL: false,
       showMonthAfterYear: false,
