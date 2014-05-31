@@ -55,8 +55,8 @@ $(document).ready(function() {
     validar_edicion_prescripciones();
     e.preventDefault();
     $("#editprescripciones").modal({
-	minHeight:450,
-	minWidth: 600
+      minHeight:450,
+      minWidth: 600
     });
     var nRow = $(this).parents('tr')[0];
     aData = tprescripciones.fnGetData(nRow);
@@ -162,11 +162,15 @@ $(document).ready(function() {
             <i class="glyphicon glyphicon-trash"></i></button></a>\
           <a href="./scripts_php/incidencias.php?id_historial=' + data + '">\
             <button title="Incidencias del historial"  class="incidenciasbtn btn btn-warning">\
-            <i class="glyphicon glyphicon-warning-sign"></i></button></a>';
+            <i class="glyphicon glyphicon-warning-sign"></i></button></a>\
+            <a href="./scripts_php/historial_editar.php?id_historial=' + data + '">\
+            <button title="Modificar este historial"  class="btnhistorialeditar btn btn-warning">\
+            <i class="glyphicon glyphicon-warning-sign"></i></button></a>'
+            ;
           },
           "bSortable": false,
           "bSearchable": false,
-          "sWidth": "60px"
+          "sWidth": "80px"
         }
       ]
     });
@@ -210,8 +214,8 @@ $(document).ready(function() {
     entrada_lab = $('#entrada_lab').val();
     salida_lab = $('#salida_lab').val();
     observaciones = $('#observaciones').val();
-    $('#pruebas').show();
-    $('#pruebas').html(aData.id_prescripcion);
+    //$('#pruebas').show();
+    //$('#pruebas').html(aData.id_prescripcion);
     $.ajax({
       type: 'POST',
       dataType: 'json',
@@ -225,6 +229,94 @@ $(document).ready(function() {
         entrada_lab: entrada_lab,
         salida_lab: salida_lab,
         observaciones: observaciones
+      },
+      error: function(xhr, status, error) {
+        jQuery.noticeAdd({
+          text: data[0].estado + ': ' + data[0].mensaje,
+          stay: false,
+          type: 'error'
+        });
+      },
+      success: function(data) {
+        jQuery.noticeAdd({
+          text: data[0].mensaje,
+          stay: false,
+          type: 'succes'
+        });
+        var $mitabla = $("#thistorial").dataTable({bRetrieve: true});
+        $mitabla.fnDraw();
+      },
+      complete: {
+        //si queremos hacer algo al terminar la petición ajax
+      }
+    });
+    parent.$.modal.close(); // cierra la ventana modal
+  });
+  
+  /* Modificar entrada en el historial */
+  $('#btnhistorialeditar').click(function(e) {
+    e.preventDefault();
+    $(".frmedicionhistoria").modal({
+      minHeight: 520,
+      minWidth: 500
+    });
+    var nRow = $(this).parents('tr')[0];
+    aData = thistorial.fnGetData(nRow);
+    $("#id_prescripcioned").val(aData.id_prescripcion);
+    $("#citaed").val(aData.cita);
+    $("#doctor").val(aData.id_doctor);
+    $("#paciente").val(aData.nom_paciente);
+    $("#historia").val(aData.n_historia);
+    $("#tipotrabajo").val(aData.tipo_trabajo);
+    //$('#pruebas').html('la prescripcion seleccionada es '+aData.id_prescripcion);
+    //$('#pruebas').show(); 
+    jQuery('#cita,#salida_cli,#entrada_lab,#salida_lab').keypress(function() {
+      return false;
+    });
+    $("#cita").datepicker({});
+    $("#salida_cli").datepicker({});
+    $("#entrada_lab").datepicker({});
+    $("#salida_lab").datepicker({});
+  });
+  
+  /* Botón borrado entrada de historial */
+  $('#btnborradohistorial').click(function(mievento){
+    mievento.preventDefault();
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: "./scripts_php/incidencias_borrar.php",
+      async: false,
+      data: {
+        id_historial: aData.id_historial
+      },
+      error: function(xhr, status, error) {
+        jQuery.noticeAdd({
+          text: data[0].estado + ': ' + data[0].mensaje,
+          stay: false,
+          type: 'error'
+        });
+      },
+      success: function(data) {
+        jQuery.noticeAdd({
+          text: data[0].mensaje,
+          stay: false,
+          type: 'succes'
+        });
+        var $mitabla = $("#tincidencias").dataTable({bRetrieve: true});
+        $mitabla.fnDraw();
+      },
+      complete: {
+        //si queremos hacer algo al terminar la petición ajax
+      }
+    });
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: "./scripts_php/historial_borrar.php",
+      async: false,
+      data: {
+        id_historial: aData.id_historial
       },
       error: function(xhr, status, error) {
         jQuery.noticeAdd({
@@ -279,7 +371,7 @@ $(document).ready(function() {
     aData = thistorial.fnGetData(nRow);
     //$("#id_prescripcion").val(aData.id_prescripcion);
     $('.incidencias').fadeIn(300);
-    console.log(aData);
+    //console.log(aData);
     /* Datatable incidencias de una prescripcion */
     tincidencias = $('#tincidencias').dataTable({
       //"bRetrieve": true,
