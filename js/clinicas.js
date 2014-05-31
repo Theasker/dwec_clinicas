@@ -164,13 +164,13 @@ $(document).ready(function() {
             <button title="Incidencias del historial"  class="incidenciasbtn btn btn-warning">\
             <i class="glyphicon glyphicon-warning-sign"></i></button></a>\
             <a href="./scripts_php/historial_editar.php?id_historial=' + data + '">\
-            <button title="Modificar este historial"  class="btnhistorialeditar btn btn-warning">\
-            <i class="glyphicon glyphicon-warning-sign"></i></button></a>'
+            <button title="Modificar este historial"  class="btnhistorialeditar btn btn-success">\
+            <i class="glyphicon glyphicon-pencil"></i></button></a>'
             ;
           },
           "bSortable": false,
           "bSearchable": false,
-          "sWidth": "80px"
+          "sWidth": "95px"
         }
       ]
     });
@@ -253,8 +253,56 @@ $(document).ready(function() {
     parent.$.modal.close(); // cierra la ventana modal
   });
   
+  /* Botón enviar entrada modificada del historial */
+  $('#enviarhistoriaeditar').click(function(mievento) {
+    mievento.preventDefault();
+    cita = $('#citaed').val();
+    salida_cli = $('#salida_clied').val();
+    entrada_lab = $('#entrada_labed').val();
+    salida_lab = $('#salida_labed').val();
+    observaciones = $('#observacionesed').val();
+    console.log('id_historial'+aData.id_historial);
+    //$('#pruebas').show();
+    //$('#pruebas').html(aData.id_prescripcion);
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: "./scripts_php/historial_editar.php",
+      async: false,
+      //estos son los datos que queremos actualizar, en json:
+      data: {
+        id_historial: aData.id_historial,
+        cita: cita,
+        salida_cli: salida_cli,
+        entrada_lab: entrada_lab,
+        salida_lab: salida_lab,
+        observaciones: observaciones
+      },
+      error: function(xhr, status, error) {
+        jQuery.noticeAdd({
+          text: data[0].estado + ': ' + data[0].mensaje,
+          stay: false,
+          type: 'error'
+        });
+      },
+      success: function(data) {
+        jQuery.noticeAdd({
+          text: data[0].mensaje,
+          stay: false,
+          type: 'succes'
+        });
+        var $mitabla = $("#thistorial").dataTable({bRetrieve: true});
+        $mitabla.fnDraw();
+      },
+      complete: {
+        //si queremos hacer algo al terminar la petición ajax
+      }
+    });
+    parent.$.modal.close(); // cierra la ventana modal
+  });
+  
   /* Modificar entrada en el historial */
-  $('#btnhistorialeditar').click(function(e) {
+  $("#thistorial").on('click', '.btnhistorialeditar', function(e) {
     e.preventDefault();
     $(".frmedicionhistoria").modal({
       minHeight: 520,
@@ -264,19 +312,19 @@ $(document).ready(function() {
     aData = thistorial.fnGetData(nRow);
     $("#id_prescripcioned").val(aData.id_prescripcion);
     $("#citaed").val(aData.cita);
-    $("#doctor").val(aData.id_doctor);
-    $("#paciente").val(aData.nom_paciente);
-    $("#historia").val(aData.n_historia);
-    $("#tipotrabajo").val(aData.tipo_trabajo);
+    $("#salida_clied").val(aData.salida_cli);
+    $("#entrada_labed").val(aData.entrada_lab);
+    $("#salida_labed").val(aData.salida_lab);
+    $("#observacionesed").val(aData.observaciones);
     //$('#pruebas').html('la prescripcion seleccionada es '+aData.id_prescripcion);
     //$('#pruebas').show(); 
-    jQuery('#cita,#salida_cli,#entrada_lab,#salida_lab').keypress(function() {
+    jQuery('#citaed,#salida_clied,#entrada_labed,#salida_labed').keypress(function() {
       return false;
     });
-    $("#cita").datepicker({});
-    $("#salida_cli").datepicker({});
-    $("#entrada_lab").datepicker({});
-    $("#salida_lab").datepicker({});
+    $("#citaed").datepicker({});
+    $("#salida_clied").datepicker({});
+    $("#entrada_labed").datepicker({});
+    $("#salida_labed").datepicker({});
   });
   
   /* Botón borrado entrada de historial */
@@ -389,7 +437,9 @@ $(document).ready(function() {
         {
           "mData": "id_historial",
           "mRender": function(data, type, full) {
-            return '<a href="./scripts_php/incidencia_modificar.php?prescripcion=' + data + '"><button class="editarbtn">Editar</button></a>';
+            return '<a href="./scripts_php/incidencia_modificar.php?id_historial=' + data + '">\n\
+            <button title="Modificar esta incidencia" class="btneditarincidencia btn btn-success">\n\
+            <i class="glyphicon glyphicon-pencil"></i></button></a>';
           },
           "bSortable": false,
           "bSearchable": false,
@@ -398,6 +448,32 @@ $(document).ready(function() {
       ]
     });
     /* FIN Datatable incidencias de una prescripcion */
+  });
+
+  
+  $("#tincidencias").on('click', '.btneditarincidencia', function(e){
+    e.preventDefault();
+    $(".frmedicionhistoria").modal({
+      minHeight: 520,
+      minWidth: 500
+    });
+    var nRow = $(this).parents('tr')[0];
+    aData = thistorial.fnGetData(nRow);
+    $("#id_prescripcioned").val(aData.id_prescripcion);
+    $("#citaed").val(aData.cita);
+    $("#salida_clied").val(aData.salida_cli);
+    $("#entrada_labed").val(aData.entrada_lab);
+    $("#salida_labed").val(aData.salida_lab);
+    $("#observacionesed").val(aData.observaciones);
+    //$('#pruebas').html('la prescripcion seleccionada es '+aData.id_prescripcion);
+    //$('#pruebas').show(); 
+    jQuery('#citaed,#salida_clied,#entrada_labed,#salida_labed').keypress(function() {
+      return false;
+    });
+    $("#citaed").datepicker({});
+    $("#salida_clied").datepicker({});
+    $("#entrada_labed").datepicker({});
+    $("#salida_labed").datepicker({});
   });
 
   // Validación de los campos de edición de 
