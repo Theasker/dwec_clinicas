@@ -1,5 +1,6 @@
 $(document).ready(function() {
   $.ajaxSetup({cache: false});
+  
   $('#reset').click(function() {
     $('.prescripciones').hide();
   });
@@ -43,7 +44,7 @@ $(document).ready(function() {
         },
         "bSortable": false,
         "bSearchable": false,
-        "sWidth": "80px"
+        "sWidth": "60px"
       }
     ]
   });
@@ -132,6 +133,7 @@ $(document).ready(function() {
     var nRow = $(this).parents('tr')[0];
     aData = tprescripciones.fnGetData(nRow);
     $('.historial').fadeIn(300);
+    //console.log(aData);
     /* Datatable historial de una prescripcion */
     thistorial = $('#thistorial').dataTable({
       "bDestroy": true,
@@ -144,37 +146,38 @@ $(document).ready(function() {
        * que llamamos por ajax */
       "fnServerParams": function ( aoData ) {
             aoData.push( { "name": "id_prescripcion", "value": aData.id_prescripcion} );
-        },
+       },
       "aoColumns": [
+        //{"mData": "id_historial","bVisible": false},
         {"mData": "salida_cli"},
         {"mData": "entrada_lab"},
         {"mData": "salida_lab"},
         {"mData": "observaciones"},
         {"mData": "cita"},
         {
-          "mData": "id_prescripcion",
+          "mData": "id_historial",
           "mRender": function(data, type, full) {
             return '<a href="./scripts_php/historial_eliminar.php?id_prescripcion=' + data + '">\
-            <button title="Borrar del historial de la prescripción"   class="btnborrarhistorial btn btn-danger">\
-            <i class="glyphicon glyphicon-trash"></button></a>\n\
-          <a href="./scripts_php/prescripciones_incidencias.php?id_prescripcion=' + data + '">\
-            <button title="Incidencias de la prescripcion"  class="incidenciasbtn btn btn-danger">\
+            <button title="Borrar del historial de la prescripción" class="btnborrarhistorial btn btn-danger">\
+            <i class="glyphicon glyphicon-trash"></i></button></a>\
+          <a href="./scripts_php/incidencias.php?id_historial=' + data + '">\
+            <button title="Incidencias del historial"  class="incidenciasbtn btn btn-warning">\
             <i class="glyphicon glyphicon-warning-sign"></i></button></a>';
           },
           "bSortable": false,
           "bSearchable": false,
-          "sWidth": "20px"
+          "sWidth": "60px"
         }
       ]
     });
   });
 
   /* Botón borrar entrada de historial */
-  $("#thistorial").on('click','.btnborrarhistorial', function(e) {
+  $("#thistorial").on('click', '.btnborrarhistorial', function(e) {
     e.preventDefault();
     $("#validarborrarhistorial").modal({
-	minHeight:170,
-	minWidth: 430
+      minHeight: 170,
+      minWidth: 430
     });
   });
 
@@ -268,16 +271,15 @@ $(document).ready(function() {
     $.datepicker.setDefaults($.datepicker.regional['es']);
   }); 
   
-  
   /* Botón listar incidencias */
-  $("#tprescripciones").on('click', '.incidenciasbtn', function(e) {
+  $("#thistorial").on('click', '.incidenciasbtn', function(e) {
     e.preventDefault();
     $('.prescripciones').fadeOut(300);
     var nRow = $(this).parents('tr')[0];
-    aData = tprescripciones.fnGetData(nRow);
-    $("#id_prescripcion").val(aData.id_prescripcion);
+    aData = thistorial.fnGetData(nRow);
+    //$("#id_prescripcion").val(aData.id_prescripcion);
     $('.incidencias').fadeIn(300);
-    //alert("id_prescripcion: " + aData.id_prescripcion);
+    console.log(aData);
     /* Datatable incidencias de una prescripcion */
     tincidencias = $('#tincidencias').dataTable({
       //"bRetrieve": true,
@@ -287,13 +289,13 @@ $(document).ready(function() {
       "bJQueryUI": true,
       "sAjaxSource": "./scripts_php/incidencias.php",
       "fnServerParams": function ( aoData ) {
-            aoData.push( { "name": "id_prescripcion", "value": aData.id_prescripcion} );
+            aoData.push( { "name": "id_historial", "value": aData.id_historial} );
         },
       "aoColumns": [
-        {"mData": "fecha_devolucion"},
+        {"mData": "fecha_incidencia"},
         {"mData": "tipo"},
         {
-          "mData": "prescripcion",
+          "mData": "id_historial",
           "mRender": function(data, type, full) {
             return '<a href="./scripts_php/incidencia_modificar.php?prescripcion=' + data + '"><button class="editarbtn">Editar</button></a>';
           },

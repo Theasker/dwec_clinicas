@@ -7,19 +7,17 @@
  * you want to insert a non-database field (for example a counter or static image)
  */
 
-
 $aColumns = array(
-  'id_devolucion',
-  'prescripcion',
-  'fecha_devolucion',
   'id_incidencia',
-  'tipo');
-// Capturo el número de prescripción enviado desde datatable del registro seleccionado
-$id_prescripcion = $_REQUEST['id_prescripcion'];
+  'tipo',
+  'id_historial',
+  'fecha_incidencia');
+// Capturo el número de histora enviado desde datatable del registro seleccionado
+$id_historial = $_REQUEST['id_historial'];
 
 
 /* Indexed column (used for fast and accurate table cardinality) */
-$sIndexColumn = "id_devolucion";
+$sIndexColumn = "id_incidencia";
 
 /* DB table to use */
 $sTable = "vincidencias";
@@ -98,6 +96,7 @@ if (isset($_GET['iSortCol_0'])) {
  */
 
 $sWhere = "";
+//$sWhere = " WHERE id_historial = $id_historial";
 if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
   $sWhere = "WHERE (";
   for ($i = 0; $i < count($aColumns); $i++) {
@@ -127,7 +126,7 @@ for ($i = 0; $i < count($aColumns); $i++) {
  * SQL queries
  * Get data to display
  */
-$sWhere = " WHERE prescripcion = $id_prescripcion";
+$sWhere = " WHERE id_historial = $id_historial";
 $sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS " . str_replace(" , ", " ", implode(", ", $aColumns)) . "
 		FROM   $sTable

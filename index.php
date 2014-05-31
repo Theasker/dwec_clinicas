@@ -113,6 +113,7 @@
               <table id="thistorial">
                 <thead>
                   <tr>
+                    <th>temp</th>
                     <th>Salida clínica</th>
                     <th>Entrada lab.</th>
                     <th>Salida lab</th>
@@ -189,7 +190,7 @@
           </div>
           <!-- FIN Formulario de nueva entrada de historial -->
 
-          <!-- Tabla de incidencias de una prescripción -->
+          <!-- Tabla de incidencias de un historial -->
           <div class="row incidencias">
             <div class="col-md-12">
               <h2 class="titulo_incidencias">Incidencias</h2>
@@ -204,14 +205,9 @@
                 <tbody>
                 </tbody>
               </table>
-              <div class="col-md-1 col-md-offset-10">
-                <a id="lnkvolver" class="btn btn-primary" href="#">
-                  Volver
-                </a>
-              </div>
             </div>
           </div>
-          <!-- Tabla de incidencias de una prescripción -->
+          <!-- Tabla de incidencias de un historial -->
 
           <footer>
             <div class="well" id="pruebas" style="display:none;"></div>
