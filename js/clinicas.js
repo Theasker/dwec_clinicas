@@ -434,6 +434,7 @@ $(document).ready(function() {
       "aoColumns": [
         {"mData": "fecha_incidencia"},
         {"mData": "tipo"},
+        {"mData": "tipo_incidencia", "bVisible": false},
         {
           "mData": "id_historial",
           "mRender": function(data, type, full) {
@@ -450,30 +451,69 @@ $(document).ready(function() {
     /* FIN Datatable incidencias de una prescripcion */
   });
 
-  
+  /* Botón editar una incidencia */
   $("#tincidencias").on('click', '.btneditarincidencia', function(e){
     e.preventDefault();
-    $(".frmedicionhistoria").modal({
-      minHeight: 520,
+    cargar_tipoincidencias();
+    $(".frmedicionincidencia").modal({
+      minHeight: 300,
       minWidth: 500
     });
     var nRow = $(this).parents('tr')[0];
-    aData = thistorial.fnGetData(nRow);
-    $("#id_prescripcioned").val(aData.id_prescripcion);
-    $("#citaed").val(aData.cita);
-    $("#salida_clied").val(aData.salida_cli);
-    $("#entrada_labed").val(aData.entrada_lab);
-    $("#salida_labed").val(aData.salida_lab);
-    $("#observacionesed").val(aData.observaciones);
+    aData = tincidencias.fnGetData(nRow);
+    console.log(aData);
+    $("#id_incidencia").val(aData.id_incidencia);
+    $("#fecha").val(aData.fecha_incidencia);
+    $("#tipoincidencia").val(aData.tipo_incidencia);
     //$('#pruebas').html('la prescripcion seleccionada es '+aData.id_prescripcion);
     //$('#pruebas').show(); 
-    jQuery('#citaed,#salida_clied,#entrada_labed,#salida_labed').keypress(function() {
+    jQuery('#fecha').keypress(function() {
       return false;
     });
-    $("#citaed").datepicker({});
-    $("#salida_clied").datepicker({});
-    $("#entrada_labed").datepicker({});
-    $("#salida_labed").datepicker({});
+    $("#fecha").datepicker({});
+  });
+
+  /* Botón enviar incidencia del historial */
+  $('#enviarincidenciaeditar').click(function(mievento) {
+    mievento.preventDefault();
+    id_incidencia = $('#id_incidencia').val();
+    fecha = $('#fecha').val();
+    tipoincidencia = $('#tipoincidencia').val();
+    //$('#pruebas').show();
+    //$('#pruebas').html(aData.id_prescripcion);
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: "./scripts_php/incidencias_editar.php",
+      async: false,
+      //estos son los datos que queremos actualizar, en json:
+      data: {
+        id_incidencia: id_incidencia,
+        fecha: fecha,
+        tipoincidencia: tipoincidencia
+      },
+      error: function(xhr, status, error) {
+        jQuery.noticeAdd({
+          text: data[0].estado + ': ' + data[0].mensaje,
+          stay: false,
+          type: 'error'
+        });
+      },
+      success: function(data) {
+        jQuery.noticeAdd({
+          text: data[0].mensaje,
+          stay: false,
+          type: 'succes'
+        });
+        var $mitabla = $("#tincidencias").dataTable({bRetrieve: true});
+        $mitabla.fnDraw();
+      },
+      complete: {
+        //si queremos hacer algo al terminar la petición ajax
+      }
+    });
+    parent.$.modal.close(); // cierra la ventana modal
+    
   });
 
   // Validación de los campos de edición de 
@@ -616,9 +656,9 @@ $(document).ready(function() {
           stay: false,
           type: 'succes'
         });
-        $("#doctor").empty();
+        $("#tipoincidencia").empty();
         $.each(data, function() {
-          $("#doctor").append($('<option></option>').val(this.id_incidencia).html(this.tipo));
+          $("#tipoincidencia").append($('<option></option>').val(this.id_incidencia).html(this.tipo));
         });
       },
       complete: {
@@ -626,7 +666,7 @@ $(document).ready(function() {
       }
     });
   }
-
+  
   cargar_clinicas();
   cargar_doctores();
   /* Fin prescripciones  */

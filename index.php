@@ -232,6 +232,7 @@
                   <tr>
                     <th>Fecha</th>
                     <th>Tipo</th>
+                    <th>Tipo incidencia</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
@@ -242,39 +243,29 @@
           </div>
           <!-- Tabla de incidencias de un historial -->
 
-          <!-- Formulario de modificacion de historial -->
+          <!-- Formulario de modificacion de incidencia -->
           <div class="frmedicionincidencia" style="display:none;">              
             <div class="col-md-12 column">
               <h3>Modificación de una incidencia</h3>
               <form role="form" id="frmeditarincidencia" novalidate action="" method="post">
                 <div class="form-group">
                   <input type="hidden" id="id_incidencia"/>
-                  <label for="citaed">Cita</label>
-                  <input class="form-control" type="text" id="citaed" name="citaed"/>
+                  <label for="fecha">Fecha de la incidencia</label>
+                  <input class="form-control" type="text" id="fecha" name="fecha"/>
                 </div>
                 <div class="form-group">
-                  <label for="salida_clied" >Salida clínica</label>
-                  <input class="form-control" type="text" id="salida_clied" name="salida_clied"/>
-                </div>
-                <div class="form-group">
-                  <label for="entrada_labed" >Entrada a laboratorio</label>
-                  <input class="form-control" type="text" id="entrada_labed" name="entrada_labed"/>
-                </div>
-                <div class="form-group">
-                  <label for="salida_labed" >Salida de laboratorio</label>
-                  <input class="form-control" type="text" id="salida_labed" name="salida_labed"/>
-                </div>
-                <div class="form-group">
-                  <label for="observacionesed" >Observaciones</label>
-                  <input class="form-control" type="text" id="observacionesed" name="observacionesed"/>
+                  <label for="tipoincidencia" >Tipo de incidencia</label>
+                  <select class="form-control" id="tipoincidencia" name="tipoincidencia">
+
+                  </select>
                 </div>
                 <div class="col-md-1 col-md-offset-10 text-right">
-                  <input class="btn btn-default" id="enviarhistoriaeditar" type="submit" value="Guardar"/> 
+                  <input class="btn btn-default" id="enviarincidenciaeditar" type="submit" value="Guardar"/> 
                 </div>                    
               </form>
             </div>
           </div>
-          <!-- FIN Formulario de modificacion de historial -->
+          <!-- FIN Formulario de modificacion de incidencia -->
           
           <footer>
             <div class="well" id="pruebas" style="display:none;"></div>

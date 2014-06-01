@@ -9,6 +9,7 @@
 
 $aColumns = array(
   'id_incidencia',
+  'tipo_incidencia',
   'tipo',
   'id_historial',
   'fecha_incidencia');

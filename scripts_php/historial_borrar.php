@@ -51,7 +51,7 @@ if (!$query_res) {
   $mensaje = 'Error en la consulta: ' . mysql_error() . "\n";
   $estado = mysql_errno();
 } else {
-  $mensaje = "Actualización correcta de la prescripción";
+  $mensaje = "Borrado registro de historial";
   $estado = 0;
 }
 

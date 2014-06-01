@@ -29,12 +29,9 @@ mysql_query('SET names utf8');
  * SQL queries
  * Get data to display
  */
-$id_historial = $_POST["id_historial"];
-$cita = $_POST["cita"];
-$salida_cli = $_POST["salida_cli"];
-$entrada_lab = $_POST["entrada_lab"];
-$salida_lab = $_POST["salida_lab"];
-$observaciones = $_POST["observaciones"];
+$id_incidencia = $_POST["id_incidencia"];
+$fecha = $_POST["fecha"];
+$tipoincidencia = $_POST["tipoincidencia"];
 
 /*
  * Tabla clínicas
@@ -43,15 +40,11 @@ $observaciones = $_POST["observaciones"];
 //$query = "UPDATE clinicas SET nombre = '$clinica' WHERE id_clinica = $id_clinica";
 //$query = "UPDATE clinicas SET nombre = 'CENTRO IMPLANTOLOGICO VIGOx' WHERE id_clinica = 3";
 
-$query = "UPDATE historial "
+$query = "UPDATE incidencias "
         . "SET "
-        . "cita = '$cita',"
-        . "salida_cli = '$salida_cli',"
-        . "entrada_lab = '$entrada_lab',"
-        . "salida_lab = '$salida_lab',"
-        . "observaciones = '$observaciones' "
-        . "WHERE id_historial = $id_historial";
-
+        . "fecha_incidencia = '$fecha',"
+        . "tipo_incidencia = $tipoincidencia "
+        . "WHERE id_incidencia = " . $id_incidencia;
 
 //mysql_query($query, $gaSql['link']) or fatal_error('MySQL Error: ' . mysql_errno());
 /* En función del resultado correcto o no, mostraremos el mensaje que corresponda */
@@ -62,7 +55,7 @@ if (!$query_res) {
   $mensaje = 'Error en la consulta: ' . mysql_error() . "\n";
   $estado = mysql_errno();
 } else {
-  $mensaje = "Actualización correcta del registro de historial";
+  $mensaje = "Actualización correcta de la incidencia";
   $estado = 0;
 }
 
