@@ -35,6 +35,7 @@
         <ul class="sidebar-nav">
           <li class="sidebar-brand"><a id="reset" href="#">Inicio</a></li>
           <li><a id="lnkvolverprescripciones" href="#">Prescripciones</a></li>
+          <li><a id="lnkmodificaciones" href="#">Modificaciones de diseño</a></li>
         </ul>
       </div>
 
@@ -113,6 +114,8 @@
               <table id="thistorial">
                 <thead>
                   <tr>
+                    <th>id_historial</th>
+                    <th>id_prescripcion</th>
                     <th>Salida clínica</th>
                     <th>Entrada lab.</th>
                     <th>Salida lab</th>
@@ -266,6 +269,22 @@
             </div>
           </div>
           <!-- FIN Formulario de modificacion de incidencia -->
+          
+          <!-- Modificaciones sobre el diseño original -->
+          <div class="well modificaciones" style="display:none;">
+            <h2>Modificaciones del diseño original propuesto en DIW.</h2>
+            <h3>Modificaciones de la base de datos</h3>
+            <ul>
+              <li> Elimino el campo <strong>pvp_material</strong> de la tabla <strong>albaran_materiales</strong>.</li>
+              <li>Elimino el campo <strong>doctores_id_doctor</strong> de la tabla <strong>clinica_doctor</strong>.</li>
+              <li> Elimino la tabla devoluciones y creo la tabla historial e incidencias para corregir el diseño "equivocado" que tenía.</li>
+            </ul>
+            <h3>Modificaciones del diseño de interfaz.</h3>
+            <ul>
+              <li>El menú en vez de la parte superior va en barra lateral.</li>
+            </ul>
+          </div>
+          <!-- FIN Modificaciones sobre el diseño original -->
           
           <footer>
             <div class="well" id="pruebas" style="display:none;"></div>

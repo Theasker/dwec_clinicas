@@ -2,11 +2,15 @@ $(document).ready(function() {
   $.ajaxSetup({cache: false});
   
   $('#reset').click(function() {
-    $('.prescripciones').hide();
+    $('.modificaciones').fadeOut(200);
+    $('.prescripciones').fadeOut(200);
+    $('.historial').fadeOut(200);
+    $('.incidencias').fadeOut(200);
   });
   /* prescripciones */
 
   $('#lnkvolverprescripciones').click(function() {
+    $('.modificaciones').fadeOut(200);
     $('.incidencias').fadeOut(300);
     $('.historial').fadeOut(300);
     $('.prescripciones').fadeIn(300);
@@ -148,7 +152,8 @@ $(document).ready(function() {
             aoData.push( { "name": "id_prescripcion", "value": aData.id_prescripcion} );
        },
       "aoColumns": [
-        //{"mData": "id_historial","bVisible": false},
+        {"mData": "id_historial","bVisible": false},
+        {"mData": "id_prescripcion","bVisible": false},
         {"mData": "salida_cli"},
         {"mData": "entrada_lab"},
         {"mData": "salida_lab"},
@@ -179,6 +184,9 @@ $(document).ready(function() {
   /* Botón borrar entrada de historial */
   $("#thistorial").on('click', '.btnborrarhistorial', function(e) {
     e.preventDefault();
+    var nRow = $(this).parents('tr')[0];
+    aData = thistorial.fnGetData(nRow);
+    console.log(aData);
     $("#validarborrarhistorial").modal({
       minHeight: 170,
       minWidth: 430
@@ -200,6 +208,7 @@ $(document).ready(function() {
     jQuery('#cita,#salida_cli,#entrada_lab,#salida_lab').keypress(function() {
       return false;
     });
+    jQuery('#cita,#salida_cli,#entrada_lab,#salida_lab,#observaciones').val('');
     $("#cita").datepicker({ });
     $("#salida_cli").datepicker({ });
     $("#entrada_lab").datepicker({ });
@@ -666,6 +675,16 @@ $(document).ready(function() {
       }
     });
   }
+  
+  /* Muestra las modificaciones hechas respecto al diseño
+   * originar de la base de datos
+   */
+  $('#lnkmodificaciones').click(function (){
+    $('.prescripciones').fadeOut(200);
+    $('.historial').fadeOut(200);
+    $('.incidencias').fadeOut(200);
+    $('.modificaciones').fadeIn(500);
+  });
   
   cargar_clinicas();
   cargar_doctores();
