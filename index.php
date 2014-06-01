@@ -283,6 +283,11 @@
             <ul>
               <li>El menú en vez de la parte superior va en barra lateral.</li>
             </ul>
+            <h3>Control de Versiones.</h3>
+            <ul>
+              <li><a href="https://bitbucket.org/Theasker/dwec_clinicas">Bitbucket (repositorio privado)</a></li>
+              <li><a href="https://github.com/Theasker/dwec_clinicas">Github</a></li>
+            </ul>
           </div>
           <!-- FIN Modificaciones sobre el diseño original -->
           
